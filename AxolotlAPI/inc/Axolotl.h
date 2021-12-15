@@ -1,5 +1,5 @@
 #pragma once
-#include"Device.h"
-#include"Texture.h"
-#include"Context.h"
-#include"DeviceViewport.h"
+#include"AXDevice.h"
+#include"AXTexture.h"
+#include"AXContext.h"
+#include"AXDeviceViewport.h"
