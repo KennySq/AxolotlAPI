@@ -72,13 +72,12 @@ struct AX_TEXTURE2D_DESC
 	eAXFormat Format;
 };
 
-struct Texture2D
+struct AXTexture2D
 {
-	explicit Texture2D(const AX_TEXTURE2D_DESC& descriptor);
-	~Texture2D();
+	explicit AXTexture2D(const AX_TEXTURE2D_DESC& descriptor);
+	~AXTexture2D();
 
 private:
-
 	const eAXFormat mFormat;
 
 	unsigned int mWidth;

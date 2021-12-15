@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Axolotl.h" />
     <ClInclude Include="inc\Context.h" />
     <ClInclude Include="inc\Device.h" />
     <ClInclude Include="inc\DeviceViewport.h" />
