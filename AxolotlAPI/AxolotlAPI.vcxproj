@@ -156,20 +156,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="inc\Axolotl.h" />
-    <ClInclude Include="inc\Context.h" />
-    <ClInclude Include="inc\Device.h" />
-    <ClInclude Include="inc\DeviceViewport.h" />
+    <ClInclude Include="inc\AXContext.h" />
+    <ClInclude Include="inc\AXDevice.h" />
+    <ClInclude Include="inc\AXDeviceViewport.h" />
     <ClInclude Include="inc\framework.h" />
     <ClInclude Include="inc\pch.h" />
-    <ClInclude Include="inc\Texture.h" />
+    <ClInclude Include="inc\AXTexture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="inc\Device.cpp" />
+    <ClCompile Include="inc\AXDevice.cpp" />
     <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="inc\IDeviceResource.h" />
-    <ClCompile Include="src\Texture.cpp">
+    <ClCompile Include="src\AXTexture.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>

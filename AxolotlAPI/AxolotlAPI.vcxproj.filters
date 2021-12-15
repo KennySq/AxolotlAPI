@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Device.h">
+    <ClInclude Include="inc\AXDevice.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="inc\framework.h">
@@ -24,13 +24,13 @@
     <ClInclude Include="inc\pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Context.h">
+    <ClInclude Include="inc\AXContext.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inc\DeviceViewport.h">
+    <ClInclude Include="inc\AXDeviceViewport.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Texture.h">
+    <ClInclude Include="inc\AXTexture.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="inc\Axolotl.h">
@@ -41,10 +41,10 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="inc\Device.cpp">
+    <ClCompile Include="inc\AXDevice.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
+    <ClCompile Include="src\AXTexture.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
