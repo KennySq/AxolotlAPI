@@ -13,6 +13,8 @@
 #include<iostream>
 #include<string>
 #include<memory>
+#include<functional>
+#include<vector>
 
 #include<cuda.h>
 #include<device_functions.h>
