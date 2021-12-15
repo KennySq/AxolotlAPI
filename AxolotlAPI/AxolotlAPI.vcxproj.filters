@@ -13,44 +13,86 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\public">
+      <UniqueIdentifier>{6fa801cc-918b-4b25-b02f-87c8ef5d0a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\private">
+      <UniqueIdentifier>{eb6e1c51-104c-4466-989f-014d41315f04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\public">
+      <UniqueIdentifier>{305cf72d-824b-45c3-855f-07b4ac31037b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\private">
+      <UniqueIdentifier>{6a4cf2a0-fa1a-4830-adab-5430b83bfaaf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\AXDevice.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\framework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\pch.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="inc\AXChain.h">
+      <Filter>헤더 파일\public</Filter>
     </ClInclude>
     <ClInclude Include="inc\AXContext.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\public</Filter>
     </ClInclude>
-    <ClInclude Include="inc\AXDeviceViewport.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\AXTexture.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="inc\AXDevice.cuh">
+      <Filter>헤더 파일\public</Filter>
     </ClInclude>
     <ClInclude Include="inc\Axolotl.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\public</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXTexture.h">
+      <Filter>헤더 파일\public</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Command.h">
+      <Filter>헤더 파일\private</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXCommandList.h">
+      <Filter>헤더 파일\public</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXDeviceTexture2D.cuh">
+      <Filter>헤더 파일\private</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXView.h">
+      <Filter>헤더 파일\private</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXRenderTargetView.cuh">
+      <Filter>헤더 파일\public</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\pch.h">
+      <Filter>헤더 파일\private</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\framework.h">
+      <Filter>헤더 파일\private</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="inc\AXDevice.cpp">
+    <ClCompile Include="src\AXTexture.cpp">
+      <Filter>소스 파일\public</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AXChain.cpp">
+      <Filter>소스 파일\public</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AXCommandList.cpp">
+      <Filter>소스 파일\public</Filter>
+    </ClCompile>
+    <ClCompile Include="inc\AXContext.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\AXTexture.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="src\Command.cpp">
+      <Filter>소스 파일\private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="inc\IDeviceResource.h">
-      <Filter>헤더 파일</Filter>
-    </None>
+    <None Include="inc\AXDeviceTexture2D.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="inc\AXDevice.cu">
+      <Filter>소스 파일\public</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXRenderTargetView.cu">
+      <Filter>소스 파일</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

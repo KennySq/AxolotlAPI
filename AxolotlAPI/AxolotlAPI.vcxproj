@@ -54,6 +54,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.4.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -80,6 +81,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(ProjectDir)inc;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\include</IncludePath>
     <LibraryPath>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\lib\x64;$(LibraryPath)</LibraryPath>
+    <TargetName>Axolotl</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -126,7 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;AXOLOTLAPI_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
@@ -155,25 +157,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\AXChain.h" />
+    <ClInclude Include="inc\AXDeviceTexture2D.cuh" />
     <ClInclude Include="inc\Axolotl.h" />
     <ClInclude Include="inc\AXContext.h" />
-    <ClInclude Include="inc\AXDevice.h" />
-    <ClInclude Include="inc\AXDeviceViewport.h" />
+    <ClInclude Include="inc\AXDevice.cuh" />
+    <ClInclude Include="inc\AXRenderTargetView.cuh" />
+    <ClInclude Include="inc\Command.h" />
+    <ClInclude Include="inc\AXCommandList.h" />
     <ClInclude Include="inc\framework.h" />
+    <ClInclude Include="inc\AXView.h" />
     <ClInclude Include="inc\pch.h" />
     <ClInclude Include="inc\AXTexture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="inc\AXDevice.cpp" />
-    <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="inc\AXContext.cpp" />
+    <CudaCompile Include="inc\AXDevice.cu">
+      <FileType>Document</FileType>
+    </CudaCompile>
+    <ClCompile Include="src\AXChain.cpp" />
+    <CudaCompile Include="src\AXRenderTargetView.cu">
+      <FileType>Document</FileType>
+    </CudaCompile>
+    <ClCompile Include="src\Command.cpp" />
+    <ClCompile Include="src\AXCommandList.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="inc\IDeviceResource.h" />
     <ClCompile Include="src\AXTexture.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="inc\AXDeviceTexture2D.cu" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.4.targets" />
   </ImportGroup>
 </Project>

@@ -1,5 +1,8 @@
 #pragma once
-#include"AXDevice.h"
+#include "AXDevice.cuh"
 #include"AXTexture.h"
 #include"AXContext.h"
-#include"AXDeviceViewport.h"
+#include"AXChain.h"
+#include"AXCommandList.h"
+#include"AXRenderTargetView.h"
+#include"AXView.h"
