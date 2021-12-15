@@ -74,16 +74,16 @@ struct AX_TEXTURE2D_DESC
 
 struct AXTexture2D
 {
-	explicit AXTexture2D(const AX_TEXTURE2D_DESC& descriptor);
+	friend struct AXDevice;
+	explicit AXTexture2D();
 	~AXTexture2D();
 
 private:
-	const eAXFormat mFormat;
+	eAXFormat mFormat;
 
 	unsigned int mWidth;
 	unsigned int mHeight;
 
 	DWORD* mRaw;
 	HBITMAP* mBitmap;
-	HDC* mMemoryDC;
 };
