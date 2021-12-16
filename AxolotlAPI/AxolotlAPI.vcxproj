@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -158,11 +158,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="inc\AXChain.h" />
+    <ClInclude Include="inc\AXDeviceMemoryPool.cuh" />
     <ClInclude Include="inc\AXDeviceTexture2D.cuh" />
     <ClInclude Include="inc\Axolotl.h" />
     <ClInclude Include="inc\AXContext.h" />
     <ClInclude Include="inc\AXDevice.cuh" />
     <ClInclude Include="inc\AXRenderTargetView.cuh" />
+    <ClInclude Include="inc\AXUtil.h" />
     <ClInclude Include="inc\Command.h" />
     <ClInclude Include="inc\AXCommandList.h" />
     <ClInclude Include="inc\framework.h" />
@@ -171,14 +173,14 @@
     <ClInclude Include="inc\AXTexture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="inc\AXContext.cpp" />
-    <CudaCompile Include="inc\AXDevice.cu">
-      <FileType>Document</FileType>
-    </CudaCompile>
     <ClCompile Include="src\AXChain.cpp" />
+    <CudaCompile Include="src\AXDevice.cu" />
+    <CudaCompile Include="src\AXDeviceMemoryPool.cu" />
+    <CudaCompile Include="src\AXDeviceTexture2D.cu" />
     <CudaCompile Include="src\AXRenderTargetView.cu">
       <FileType>Document</FileType>
     </CudaCompile>
+    <ClCompile Include="src\AXContext.cpp" />
     <ClCompile Include="src\Command.cpp" />
     <ClCompile Include="src\AXCommandList.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -189,9 +191,6 @@
     <ClCompile Include="src\AXTexture.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="inc\AXDeviceTexture2D.cu" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

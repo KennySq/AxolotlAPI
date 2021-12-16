@@ -63,6 +63,12 @@
     <ClInclude Include="inc\framework.h">
       <Filter>헤더 파일\private</Filter>
     </ClInclude>
+    <ClInclude Include="inc\AXDeviceMemoryPool.cuh">
+      <Filter>헤더 파일\private</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXUtil.h">
+      <Filter>소스 파일\public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -77,22 +83,25 @@
     <ClCompile Include="src\AXCommandList.cpp">
       <Filter>소스 파일\public</Filter>
     </ClCompile>
-    <ClCompile Include="inc\AXContext.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="src\Command.cpp">
       <Filter>소스 파일\private</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="inc\AXDeviceTexture2D.cu" />
-  </ItemGroup>
-  <ItemGroup>
-    <CudaCompile Include="inc\AXDevice.cu">
+    <ClCompile Include="src\AXContext.cpp">
       <Filter>소스 파일\public</Filter>
-    </CudaCompile>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
     <CudaCompile Include="src\AXRenderTargetView.cu">
       <Filter>소스 파일</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXDevice.cu">
+      <Filter>소스 파일\public</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXDeviceTexture2D.cu">
+      <Filter>소스 파일\public</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXDeviceMemoryPool.cu">
+      <Filter>소스 파일\private</Filter>
     </CudaCompile>
   </ItemGroup>
 </Project>
