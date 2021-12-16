@@ -1,6 +1,7 @@
 #pragma once
 #include<Windows.h>
 
+struct AXTexture2D;
 struct AXChain
 {
 public:
@@ -9,9 +10,11 @@ public:
 
 	void Present();
 
+	void GetBuffer(unsigned int index, const std::shared_ptr<AXTexture2D>& outTexture);
+
 private:
-	HDC mMemoryDC;
-	HBITMAP mBitmap;
+	std::vector<HDC> mMemoryDC;
+	std::vector<HBITMAP> mBitmap;
 
 	DWORD* mBuffer;
 
