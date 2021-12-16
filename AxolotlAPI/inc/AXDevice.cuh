@@ -3,6 +3,7 @@
 struct AXCommandList;
 struct AXTexture2D;
 struct AXRenderTargetView;
+struct AXDeviceMemoryPool;
 
 struct AX_TEXTURE2D_DESC;
 struct AX_RENDER_TARGET_VIEW_DESC;
@@ -25,6 +26,8 @@ private:
 
 	unsigned int mDeviceFlag;
 	static unsigned int mInterfaceCounter;
+
+	std::shared_ptr<AXDeviceMemoryPool> mMemory;
 };
 
 __declspec(dllexport) std::shared_ptr<AXDevice> AXCreateDevice(unsigned int flag);

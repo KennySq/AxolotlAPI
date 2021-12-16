@@ -1,6 +1,8 @@
 #pragma once
 #include<pch.h>
 
+#include"AXDeviceTexture2D.cuh"
+
 enum eAXFormat
 {
 	// RGBA 128 bit
@@ -79,11 +81,12 @@ struct AXTexture2D
 	~AXTexture2D();
 
 private:
+	void bindDeviceTexture(std::shared_ptr<AXDeviceTexture2D> tex);
+
 	eAXFormat mFormat;
 
 	unsigned int mWidth;
 	unsigned int mHeight;
 
-	DWORD* mRaw;
-	HBITMAP* mBitmap;
+	std::shared_ptr<AXDeviceTexture2D> mDeviceTexture;
 };
