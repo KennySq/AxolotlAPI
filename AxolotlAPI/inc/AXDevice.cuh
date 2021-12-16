@@ -1,5 +1,7 @@
 #pragma once
 #include<pch.h>
+
+struct IAXResource;
 struct AXCommandList;
 struct AXTexture2D;
 struct AXRenderTargetView;
@@ -18,7 +20,7 @@ public:
 
 	std::shared_ptr<AXTexture2D> CreateTexture2D(const AX_TEXTURE2D_DESC& desc);
 	std::shared_ptr<AXCommandList> CreateCommandList();
-	__declspec(dllexport) std::shared_ptr<AXRenderTargetView> CreateRenderTargetView(const AX_RENDER_TARGET_VIEW_DESC& desc);
+	__declspec(dllexport) std::shared_ptr<AXRenderTargetView> CreateRenderTargetView(std::shared_ptr<IAXResource> resource, const AX_RENDER_TARGET_VIEW_DESC& desc);
 
 private:
 	HWND mWinHandle;
