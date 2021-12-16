@@ -9,7 +9,7 @@
 struct SampleApp
 {
 public:
-	SampleApp();
+	SampleApp(HWND hWnd);
 	~SampleApp();
 
 	void Init();
@@ -18,5 +18,11 @@ public:
 	void Release();
 private:
 	std::shared_ptr<AXDevice> mDevice;
+	std::shared_ptr<AXChain> mChain;
+	std::shared_ptr<AXContext> mContext;
 
+	std::shared_ptr<AXCommandList> mCmdList;
+
+	std::shared_ptr<AXTexture2D> mTexture;
+	std::shared_ptr<AXRenderTargetView> mRTV;
 };
