@@ -67,33 +67,21 @@
       <Filter>헤더 파일\private</Filter>
     </ClInclude>
     <ClInclude Include="inc\AXUtil.h">
-      <Filter>소스 파일\public</Filter>
+      <Filter>헤더 파일\private</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\IAXResource.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\AXTexture.cpp">
-      <Filter>소스 파일\public</Filter>
-    </ClCompile>
     <ClCompile Include="src\AXChain.cpp">
-      <Filter>소스 파일\public</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AXCommandList.cpp">
-      <Filter>소스 파일\public</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Command.cpp">
-      <Filter>소스 파일\private</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AXContext.cpp">
       <Filter>소스 파일\public</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="src\AXRenderTargetView.cu">
-      <Filter>소스 파일</Filter>
-    </CudaCompile>
     <CudaCompile Include="src\AXDevice.cu">
       <Filter>소스 파일\public</Filter>
     </CudaCompile>
@@ -102,6 +90,21 @@
     </CudaCompile>
     <CudaCompile Include="src\AXDeviceMemoryPool.cu">
       <Filter>소스 파일\private</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\Command.cu">
+      <Filter>소스 파일\private</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXCommandList.cpp">
+      <Filter>소스 파일\public</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXContext.cu">
+      <Filter>소스 파일\public</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXTexture.cpp">
+      <Filter>소스 파일\public</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXRenderTargetView.cu">
+      <Filter>소스 파일\public</Filter>
     </CudaCompile>
   </ItemGroup>
 </Project>

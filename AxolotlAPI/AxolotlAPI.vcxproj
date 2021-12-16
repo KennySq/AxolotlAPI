@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -125,7 +125,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;AXOLOTLAPI_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -169,28 +169,38 @@
     <ClInclude Include="inc\AXCommandList.h" />
     <ClInclude Include="inc\framework.h" />
     <ClInclude Include="inc\AXView.h" />
+    <ClInclude Include="inc\IAXResource.h" />
     <ClInclude Include="inc\pch.h" />
     <ClInclude Include="inc\AXTexture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AXChain.cpp" />
+    <ClCompile Include="src\AXChain.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
     <CudaCompile Include="src\AXDevice.cu" />
     <CudaCompile Include="src\AXDeviceMemoryPool.cu" />
     <CudaCompile Include="src\AXDeviceTexture2D.cu" />
     <CudaCompile Include="src\AXRenderTargetView.cu">
       <FileType>Document</FileType>
     </CudaCompile>
-    <ClCompile Include="src\AXContext.cpp" />
-    <ClCompile Include="src\Command.cpp" />
-    <ClCompile Include="src\AXCommandList.cpp" />
+    <CudaCompile Include="src\AXContext.cu">
+      <FileType>Document</FileType>
+    </CudaCompile>
+    <CudaCompile Include="src\Command.cu">
+      <FileType>Document</FileType>
+    </CudaCompile>
+    <CudaCompile Include="src\AXCommandList.cpp">
+      <FileType>Document</FileType>
+    </CudaCompile>
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AXTexture.cpp">
+    <CudaCompile Include="src\AXTexture.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
+      <FileType>Document</FileType>
+    </CudaCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
