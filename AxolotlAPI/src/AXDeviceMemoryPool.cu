@@ -41,9 +41,8 @@ AXDeviceMemoryPool::~AXDeviceMemoryPool()
 {
 }
 
-void AXDeviceMemoryPool::Alloc(unsigned int size)
+void* AXDeviceMemoryPool::Alloc(unsigned int size)
 {
-
 	void* ptr = (void*)((size_t)(mRaw) + mOffset);
 
 	std::shared_ptr<AXDeviceMemoryAllocator> ma = std::make_shared<AXDeviceMemoryAllocator>(gPoolRaw, size, mOffset);
@@ -52,4 +51,5 @@ void AXDeviceMemoryPool::Alloc(unsigned int size)
 
 	mOffset += size;
 
+	return ptr;
 }

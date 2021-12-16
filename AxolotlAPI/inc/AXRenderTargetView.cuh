@@ -15,7 +15,5 @@ public:
 	__declspec(dllexport) AXRenderTargetView();
 	__declspec(dllexport) ~AXRenderTargetView();
 private:
-	std::function<void()> mClearRTV;
-
 	eAXDimension mDimension;
 };

@@ -25,7 +25,7 @@ public:
 	AXDeviceMemoryPool(unsigned int size);
 	~AXDeviceMemoryPool();
 
-	void Alloc(unsigned int size);
+	void* Alloc(unsigned int size);
 	void* GetRaw() const
 	{
 		return mRaw;
