@@ -53,3 +53,8 @@ void* AXDeviceMemoryPool::Alloc(unsigned int size)
 
 	return ptr;
 }
+
+void AXDeviceMemoryPool::ReleasePool()
+{
+	cudaFree(gPoolRaw);
+}

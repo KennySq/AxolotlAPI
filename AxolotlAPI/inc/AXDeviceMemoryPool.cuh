@@ -30,6 +30,8 @@ public:
 	{
 		return mRaw;
 	}
+
+	void ReleasePool();
 private:
 
 	std::map<void*, std::shared_ptr<AXDeviceMemoryAllocator>> mBlock;
