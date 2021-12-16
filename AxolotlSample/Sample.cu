@@ -9,6 +9,8 @@ SampleApp::SampleApp()
 	AX_RENDER_TARGET_VIEW_DESC rtvDesc{};
 
 	std::shared_ptr<AXRenderTargetView> rtv = mDevice->CreateRenderTargetView(rtvDesc);
+
+	std::shared_ptr<AXChain> chain = AXCreateChain(0);
 }
 
 SampleApp::~SampleApp()
