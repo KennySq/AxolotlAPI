@@ -3,17 +3,51 @@
 struct Command
 {
 public:
-	Command(std::function<void(const char*, va_list)> func, ...);
+	Command();
 	Command(const Command& right);
 
 	inline void Execute() const noexcept
 	{
-		//mFunc.target(mArguments);
-		// update from here 2021/12/16 10:38 PM
+	}
+
+	template<typename ...A>
+	void test(void f(A...))
+	{
+		test(std::function<void(A...)>(f));
+	}
+
+	template<size_t _ArgCount, typename ... _ArgTy>
+	inline void bind(void f(_ArgTy...), _ArgTy&& ...)
+	{
+
+	}
+
+	template<typename ... _ArgTy>
+	inline void Bind(void f(_ArgTy ...), _ArgTy ... args)
+	{
+		va_list arguments;
+		va_start(arguments, args);
+
+		//_ArgTy args[_ArgCount];
+
+		int result = 0;
+
+		//for (unsigned int i = 0; i < _ArgCount; i++)
+		//{
+		//	args[i] = va_arg(arguments, _ArgTy);
+		//}
+
+		va_end(arguments);
+		
+		//std::bind<std::function<void(_ArgTy...)>, _ArgTy ...>(f,	)
+
+		//std::function<void(_ArgTy&&)> fn;
+		mFunc = std::bind(f, args...);
+	
 	}
 
 private:
-	std::function<void(...)> mFunc;
-	va_list mArguments;
+
+	std::function<void()> mFunc;
 };
 

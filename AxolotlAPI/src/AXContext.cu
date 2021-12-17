@@ -25,6 +25,15 @@ void WrapperClearRenderTarget(void* ptr, unsigned int width, unsigned int height
 
 }
 
+template<typename... _args>
+struct funcTy
+{
+	auto count(_args ...)
+	{
+		return sizeof...(_args);
+	}
+};
+
 void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4])
 {
 	std::shared_ptr<IAXResource> resource = rtv->mResource;
@@ -34,10 +43,13 @@ void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float
 	KernelClearRenderTarget<<<width, height, 1>>>(resource->mRaw, width, height, 8, clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 	cudaDeviceSynchronize();
 
-	//Command cmd = Command(WrapperClearRenderTarget);
+	Command cmd;
+
+	cmd.Bind<void*, unsigned int, unsigned int, unsigned int, float, float, float, float>
+		(WrapperClearRenderTarget, resource->mRaw, width, height, (unsigned int)8, clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 	// update from here 2021/12/16 10:38 PM
 
-	mCommandBuffer.push_back();
+	//mCommandBuffer.push_back();
 }
 
 void AXContext::ExecuteCommandList(const std::shared_ptr<AXCommandList>& cmdList) const
