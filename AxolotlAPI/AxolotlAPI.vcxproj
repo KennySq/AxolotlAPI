@@ -157,7 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="inc\AXChain.h" />
+    <ClInclude Include="inc\AXChain.cuh" />
     <ClInclude Include="inc\AXDeviceMemoryPool.cuh" />
     <ClInclude Include="inc\AXDeviceTexture2D.cuh" />
     <ClInclude Include="inc\Axolotl.h" />
@@ -174,9 +174,9 @@
     <ClInclude Include="inc\AXTexture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AXChain.cpp">
+    <CudaCompile Include="src\AXChain.cu">
       <FileType>Document</FileType>
-    </ClCompile>
+    </CudaCompile>
     <CudaCompile Include="src\AXDevice.cu" />
     <CudaCompile Include="src\AXDeviceMemoryPool.cu" />
     <CudaCompile Include="src\AXDeviceTexture2D.cu" />

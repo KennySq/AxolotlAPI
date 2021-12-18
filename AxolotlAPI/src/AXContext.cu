@@ -7,7 +7,7 @@
 #include"AXRenderTargetView.cuh"
 
 AXContext::AXContext(unsigned int flag)
-	: mFlag(flag)
+	: mFlag(flag), mCommandIndex(0), mCommandBuffer(1024)
 {
 }
 
@@ -17,38 +17,57 @@ AXContext::~AXContext()
 
 __global__ void KernelClearRenderTarget(void* ptr, unsigned int width, unsigned height, unsigned int componentSize, float r, float g, float b, float a)
 {
-	printf("Kernel Call, Clear Render Target View!\n");
+	unsigned int blockId = blockIdx.x + blockIdx.y * gridDim.x;
+	unsigned int index = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
+	
+	DWORD* asPixel = reinterpret_cast<DWORD*>(ptr);
+
+	BYTE comp0 = r * 255.999f;
+	BYTE comp1 = g * 255.999f;
+	BYTE comp2 = b * 255.999f;
+	BYTE comp3 = a * 255.999f;
+
+	DWORD color = 0;
+
+	color |= (comp3 << 24);
+	color |= (comp0 << 16);
+	color |= (comp1 << 8);
+	color |= (comp2 << 0);
+
+	asPixel[index] = color;
 }
-
-void WrapperClearRenderTarget(void* ptr, unsigned int width, unsigned int height, unsigned int componentSize, float r, float g, float b, float a)
-{
-
-}
-
-template<typename... _args>
-struct funcTy
-{
-	auto count(_args ...)
-	{
-		return sizeof...(_args);
-	}
-};
 
 void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4])
 {
 	std::shared_ptr<IAXResource> resource = rtv->mResource;
-
+	
 	unsigned int width = 1280;
 	unsigned int height = 720;
-	KernelClearRenderTarget<<<width, height, 1>>>(resource->mRaw, width, height, 8, clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-	cudaDeviceSynchronize();
+
+	dim3 block = dim3(8, 8, 1);
+	dim3 grid = dim3(width / block.y, height / block.y, 1);
 
 	Command cmd;
 
-	cmd.Bind<void*, unsigned int, unsigned int, unsigned int, float, float, float, float>
-		(WrapperClearRenderTarget, resource->mRaw, width, height, (unsigned int)8, clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-	// update from here 2021/12/16 10:38 PM
+	float r, g, b, a;
 
+	r = clearColor[0];
+	g = clearColor[1];
+	b = clearColor[2];
+	a = clearColor[3];
+
+	KernelClearRenderTarget << <grid, block >> > (resource->mRaw, width, height, 8, r, g, b, a);
+
+	//cmd.Bind<8, void*, unsigned int, unsigned int, unsigned int, float, float, float, float>
+	//	(WrapperClearRenderTarget, resource->mRaw, width, height, (unsigned int)8, clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+
+	//mCommandBuffer[mCommandIndex] = cmd;
+	//mCommandIndex++;
+	//cmd.Bind<void*, unsigned int, unsigned int, unsigned int, float, float, float, float>
+	//	(WrapperClearRenderTarget, resource->mRaw, width, height, (unsigned int)8, clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+	//// update from here 2021/12/16 10:38 PM
+	//auto b = std::bind(WrapperClearRenderTarget, resource->mRaw, width, height, (unsigned int)8, clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+	//std::bind<std::function<void(float)>, float>(floatFn, 0.0f);
 	//mCommandBuffer.push_back();
 }
 
@@ -71,9 +90,11 @@ void AXContext::FinishCommandList(std::shared_ptr<AXCommandList>* cmdList)
 	for (unsigned int i = 0; i < size; i++)
 	{
 		Command cmd = mCommandBuffer[i];
-		(*cmdList)->mCommands.push_back(cmd);
+		(*cmdList)->mCommands[i] = cmd;
 	}
 	(*cmdList)->mbClosed = true;
 
 	mCommandBuffer.clear();
+	mCommandBuffer.resize(1024);
+	mCommandIndex = 0;
 }

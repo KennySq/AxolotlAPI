@@ -18,6 +18,8 @@ public:
 private:
 	std::vector<Command> mCommandBuffer;
 	unsigned int mFlag;
+	unsigned int mCommandIndex;
+
 };
 
 static inline std::shared_ptr<AXContext> AXCreateContext(unsigned int flag)

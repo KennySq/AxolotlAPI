@@ -35,23 +35,28 @@ public:
 
 	void Present();
 
-	void GetBuffer(unsigned int index, const std::shared_ptr<AXTexture2D>& outTexture);
+	void BindTexture(unsigned int index, const std::shared_ptr<AXTexture2D>& outTexture);
 
 private:
+	HDC mMainDC;
 	HDC mMemoryDC;
 	HBITMAP mBitmap;
+	unsigned int mWidth;
+	unsigned int mHeight;
 
 	DWORD* mBuffer;
+	void* mVirtual;
+
+	HWND mWinHandle;
 
 	unsigned int mBufferCount;
 };
 
-inline std::shared_ptr<AXChain> AXCreateChain(const AX_CHAIN_DESC& desc)
+static std::shared_ptr<AXChain> AXCreateChain(const AX_CHAIN_DESC& desc)
 {
 	std::shared_ptr<AXChain> chain = std::make_shared<AXChain>();
 	unsigned int bufferCount = desc.BufferCount;
 	HDC dc = GetDC(desc.Hwnd);
-	chain->mMemoryDC = CreateCompatibleDC(dc);
 
 	BITMAPINFO bitmapInfo{};
 
@@ -64,8 +69,21 @@ inline std::shared_ptr<AXChain> AXCreateChain(const AX_CHAIN_DESC& desc)
 	bitmapInfo.bmiHeader.biHeight = desc.Height;
 	bitmapInfo.bmiHeader.biCompression = BI_RGB;
 	bitmapInfo.bmiHeader.biPlanes = 1;
+	
 
-	chain->mBitmap = CreateDIBSection(chain->mMemoryDC, &bitmapInfo, DIB_RGB_COLORS, reinterpret_cast<void**>(&chain->mBuffer), NULL, 0);
+	chain->mWidth = desc.Width;
+	chain->mHeight = desc.Height;
+
+	unsigned int total = (desc.Width * desc.Height * pixelDesc.Components * pixelDesc.BitPerComponent) / 8;
+
+	void** rawPtr = (void**)(&chain->mBuffer);
+	chain->mBitmap = CreateDIBSection(chain->mMemoryDC, &bitmapInfo, DIB_RGB_COLORS, rawPtr, NULL, 0);
+	chain->mMemoryDC = CreateCompatibleDC(dc);
+
+	chain->mMainDC = dc;
+	SelectObject(chain->mMemoryDC, chain->mBitmap);
+	
+	chain->mWinHandle = desc.Hwnd;
 
 	if (chain->mBitmap == nullptr)
 	{

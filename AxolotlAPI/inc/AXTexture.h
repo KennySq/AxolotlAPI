@@ -327,6 +327,7 @@ struct AXDeviceTexture2D;
 struct AXTexture2D : public IAXResource
 {
 	friend struct AXDevice;
+	friend struct AXChain;
 	explicit AXTexture2D();
 	~AXTexture2D();
 

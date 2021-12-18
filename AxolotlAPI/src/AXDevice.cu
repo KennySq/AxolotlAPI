@@ -33,11 +33,11 @@ AXDevice::AXDevice(unsigned int flag)
 	: mDeviceFlag(flag)
 {
 	mMemory = std::make_shared<AXDeviceMemoryPool>(8294400);
-	KernelWriteRaw << <1, 1, 1 >> > (162, mMemory->GetRaw(), 0);
-	cudaDeviceSynchronize();
+	//KernelWriteRaw << <1, 1, 1 >> > (162, mMemory->GetRaw(), 0);
+	//cudaDeviceSynchronize();
 
-	KernelViewRaw<<<1,1,1>>>(0, mMemory->GetRaw());
-	cudaDeviceSynchronize();
+	//KernelViewRaw<<<1,1,1>>>(0, mMemory->GetRaw());
+	//cudaDeviceSynchronize();
 }
 
 AXDevice::~AXDevice()
@@ -52,7 +52,7 @@ std::shared_ptr<AXTexture2D> AXDevice::CreateTexture2D(const AX_TEXTURE2D_DESC& 
 
 	AX_PIXEL_DESC pixelDesc = GetPixelDesc(desc.Format);
 
-	totalSize = desc.Width * desc.Height * (pixelDesc.BitPerComponent * pixelDesc.Components);
+	totalSize = (desc.Width * desc.Height * pixelDesc.BitPerComponent * pixelDesc.Components) / 8;
 
 	void* devicePtr = mMemory->Alloc(totalSize);
 

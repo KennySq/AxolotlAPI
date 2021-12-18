@@ -19,14 +19,17 @@ AXDeviceMemoryPool::AXDeviceMemoryPool(unsigned int size)
 	: mOffset(0)
 {
 	cudaDeviceProp prop;
-	cudaGetDeviceProperties(&prop, 0);
+	int deviceIndex;
+
+	cudaGetDevice(&deviceIndex);
+	cudaGetDeviceProperties(&prop, deviceIndex);
 
 	std::string memoryStr = std::to_string(prop.totalGlobalMem) + " bytes";
 	std::string sizeStr = std::to_string(size);
 	Log(std::string("Available device memory : ") + memoryStr);
 	Log(std::string("Request ") + sizeStr + " bytes.");
 
-	cudaError_t error = cudaMalloc(&gPoolRaw, size);
+	cudaError_t error = cudaMalloc(reinterpret_cast<void**>(&gPoolRaw), size);
 	mRaw = gPoolRaw;
 
 	if (error != NULL)
