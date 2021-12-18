@@ -6,5 +6,6 @@ Command::Command()
 }
 
 Command::Command(const Command& right)
+	: mFunc(right.mFunc)
 {
 }

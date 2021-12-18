@@ -13,7 +13,6 @@
 #include<iostream>
 #include<string>
 #include<memory>
-#include<functional>
 #include<vector>
 #include<map>
 
@@ -23,6 +22,7 @@
 #include<cuda_device_runtime_api.h>
 #include<cudaTypedefs.h>
 #include<device_launch_parameters.h>
+#include<thrust\functional.h>
 
 
 #pragma comment(lib, "cudart.lib")
