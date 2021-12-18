@@ -46,7 +46,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg{};
 
     app = std::make_shared<SampleApp>(hWnd);
-
     app->Init();
 
     while (msg.message != WM_QUIT)
@@ -98,7 +97,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, 1280,720, 0, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {

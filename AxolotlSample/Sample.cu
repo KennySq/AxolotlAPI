@@ -7,7 +7,7 @@ SampleApp::SampleApp(HWND hWnd)
 
 	AX_TEXTURE2D_DESC texDesc{};
 	AX_RENDER_TARGET_VIEW_DESC rtvDesc{};
-	texDesc.Format = AX_R8G8B8A8_UNORM;
+	texDesc.Format = AX_R32G32B32A32_UNORM;
 	texDesc.Width = 1280;
 	texDesc.Height = 720;
 
@@ -19,13 +19,16 @@ SampleApp::SampleApp(HWND hWnd)
 	AX_CHAIN_DESC chainDesc{};
 
 	chainDesc.BufferCount = 1;
-	chainDesc.BufferFormat = AX_R8G8B8A8_UNORM;
+	chainDesc.BufferFormat = AX_R32G32B32A32_UNORM;
 	chainDesc.Hwnd = hWnd;
 	chainDesc.Width = 1280;
 	chainDesc.Height = 720;
 
 	mChain = AXCreateChain(chainDesc);
+	mChain->BindTexture(0, mTexture);
+
 	mContext = AXCreateContext(CREATE_AXDEVICE_DEBUG);
+	mCmdList = mDevice->CreateCommandList();
 }
 
 SampleApp::~SampleApp()
@@ -34,12 +37,16 @@ SampleApp::~SampleApp()
 
 void SampleApp::Init()
 {
+
+
 }
 
 void SampleApp::Update(float delta)
 {
-	static float clearColor[4] = { 1.0f, 0.0f, 1.0f, 1.0f };
+	static float clearColor[4] = { 1.0f, 1.0f, 0.0f, 0.0f };
+
 	mContext->ClearRenderTarget(mRTV, clearColor);
+
 	mContext->FinishCommandList(&mCmdList);
 	mContext->ExecuteCommandList(mCmdList);
 }
