@@ -157,6 +157,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\AX3DMath.h" />
+    <ClInclude Include="inc\AXBuffer.cuh" />
     <ClInclude Include="inc\AXChain.cuh" />
     <ClInclude Include="inc\AXDeviceMemoryPool.cuh" />
     <ClInclude Include="inc\AXDeviceTexture2D.cuh" />
@@ -174,6 +176,7 @@
     <ClInclude Include="inc\AXTexture.h" />
   </ItemGroup>
   <ItemGroup>
+    <CudaCompile Include="src\AXBuffer.cu" />
     <CudaCompile Include="src\AXChain.cu">
       <FileType>Document</FileType>
     </CudaCompile>
