@@ -17,7 +17,10 @@ void AXChain::Present()
 {
 	unsigned int size = (mWidth * mHeight *  4);
 	cudaError_t error = cudaMemcpy(mBuffer, mVirtual, size, cudaMemcpyDeviceToHost);
-	Log(cudaGetErrorString(error));
+	if (error != NULL)
+	{
+		Log(cudaGetErrorString(error));
+	}
 
 	cudaDeviceSynchronize();
 

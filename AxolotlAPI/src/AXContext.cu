@@ -40,9 +40,11 @@ __global__ void KernelClearRenderTarget(void* ptr, unsigned int width, unsigned 
 void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4])
 {
 	std::shared_ptr<IAXResource> resource = rtv->mResource;
-	
-	unsigned int width = 1280;
-	unsigned int height = 720;
+	std::shared_ptr<AXTexture2D> asTex2d = std::static_pointer_cast<AXTexture2D>(resource);
+
+	AX_TEXTURE2D_DESC desc = asTex2d->GetDesc();
+	unsigned int width = desc.Width;
+	unsigned int height = desc.Height;
 
 	dim3 block = dim3(8, 8, 1);
 	dim3 grid = dim3(width / block.y, height / block.y, 1);
@@ -57,7 +59,7 @@ void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float
 	a = clearColor[3];
 
 	KernelClearRenderTarget << <grid, block >> > (resource->mRaw, width, height, 8, r, g, b, a);
-
+	cudaDeviceSynchronize();
 	//cmd.Bind<8, void*, unsigned int, unsigned int, unsigned int, float, float, float, float>
 	//	(WrapperClearRenderTarget, resource->mRaw, width, height, (unsigned int)8, clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 
