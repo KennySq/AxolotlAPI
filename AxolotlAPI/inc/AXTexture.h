@@ -331,6 +331,8 @@ struct AXTexture2D : public IAXResource
 	explicit AXTexture2D();
 	~AXTexture2D();
 
+	AX_TEXTURE2D_DESC GetDesc() const;
+
 private:
 	eAXFormat mFormat;
 
