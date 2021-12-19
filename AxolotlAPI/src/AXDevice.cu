@@ -5,6 +5,8 @@
 #include"AXRenderTargetView.cuh"
 #include"AXDeviceTexture2D.cuh"
 #include"AXDeviceMemoryPool.cuh"
+#include"AXBuffer.cuh"
+
 #include"IAXResource.h"
 
 #include<Windows.h>
@@ -78,6 +80,17 @@ std::shared_ptr<AXCommandList> AXDevice::CreateCommandList()
 	mInterfaceCounter++;
 
 	return cmdList;
+}
+
+std::shared_ptr<AXBuffer> AXDevice::CreateBuffer(const AX_BUFFER_DESC& desc)
+{
+	std::shared_ptr<AXBuffer> buffer = std::make_shared<AXBuffer>();
+
+	buffer->mRaw = mMemory->Alloc(desc.ByteSize);
+	buffer->mSize = desc.ByteSize;
+	buffer->mBindFlags = desc.BindFlags;
+
+	return buffer;
 }
 
 std::shared_ptr<AXDevice> AXCreateDevice(unsigned int flag)
