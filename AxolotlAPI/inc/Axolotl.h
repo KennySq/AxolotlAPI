@@ -7,3 +7,4 @@
 #include"AXCommandList.h"
 #include"AXRenderTargetView.cuh"
 #include"AXView.h"
+#include"AXBuffer.cuh"
