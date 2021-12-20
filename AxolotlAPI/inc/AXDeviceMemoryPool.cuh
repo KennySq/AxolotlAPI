@@ -22,7 +22,7 @@ struct AXDeviceMemoryAllocator
 struct AXDeviceMemoryPool
 {
 public:
-	AXDeviceMemoryPool(unsigned int size);
+	AXDeviceMemoryPool(size_t size);
 	~AXDeviceMemoryPool();
 
 	void* Alloc(unsigned int size);
@@ -33,11 +33,8 @@ public:
 
 	void ReleasePool();
 private:
-
 	std::map<void*, std::shared_ptr<AXDeviceMemoryAllocator>> mBlock;
 
 	void* mRaw;
 	unsigned int mOffset;
-
-
 };

@@ -16,6 +16,11 @@ struct AX_BUFFER_DESC;
 
 struct AXDevice
 {
+	struct AX_DEVICE_INFO
+	{
+		unsigned long long MemoryCapacity;
+	};
+
 public:
 	AXDevice(unsigned int flag);
 	~AXDevice();
@@ -23,7 +28,7 @@ public:
 	std::shared_ptr<AXTexture2D> CreateTexture2D(const AX_TEXTURE2D_DESC& desc);
 	std::shared_ptr<AXCommandList> CreateCommandList();
 
-	std::shared_ptr<AXBuffer> CreateBuffer(const AX_BUFFER_DESC& desc);
+	std::shared_ptr<AXBuffer> CreateBuffer(const AX_BUFFER_DESC& desc, void* subResource);
 
 	std::shared_ptr<AXRenderTargetView> CreateRenderTargetView(std::shared_ptr<IAXResource> resource, const AX_RENDER_TARGET_VIEW_DESC& desc);
 
@@ -34,7 +39,9 @@ private:
 	unsigned int mDeviceFlag;
 	static unsigned int mInterfaceCounter;
 
+	
+
 	std::shared_ptr<AXDeviceMemoryPool> mMemory;
 };
 
-__declspec(dllexport) std::shared_ptr<AXDevice> AXCreateDevice(unsigned int flag);
+std::shared_ptr<AXDevice> AXCreateDevice(unsigned int flag);
