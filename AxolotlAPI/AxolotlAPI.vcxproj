@@ -162,6 +162,7 @@
     <ClInclude Include="inc\AXChain.cuh" />
     <ClInclude Include="inc\AXDeviceMemoryPool.cuh" />
     <ClInclude Include="inc\AXDeviceTexture2D.cuh" />
+    <ClInclude Include="inc\AXDeviceUtil.cuh" />
     <ClInclude Include="inc\Axolotl.h" />
     <ClInclude Include="inc\AXContext.h" />
     <ClInclude Include="inc\AXDevice.cuh" />
