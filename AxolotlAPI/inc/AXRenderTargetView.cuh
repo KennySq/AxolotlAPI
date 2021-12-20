@@ -14,8 +14,8 @@ struct AXDeviceTexture2D;
 	friend struct AXDevice;
 public:
 
-	__declspec(dllexport) AXRenderTargetView();
-	__declspec(dllexport) ~AXRenderTargetView();
+	AXRenderTargetView();
+	~AXRenderTargetView();
 private:
 	eAXDimension mDimension;
 	std::shared_ptr<IAXResource> mResource;
