@@ -90,6 +90,37 @@ struct __AXFLOAT2X2PRV
 		};
 	};
 };
+
+struct AXFLOAT3X3
+{
+	static AXFLOAT3X3 Identity()
+	{
+		return AXFLOAT3X3(1, 0, 0, 0, 1, 0, 0, 0, 1);
+	}
+
+	__vectorcall AXFLOAT3X3()
+	{
+	}
+
+	__vectorcall AXFLOAT3X3(float s0, float s1, float s2, float s3, float s4, float s5, float s6, float s7, float s8)
+		: _11(s0), _12(s1), _13(s2), _21(s3), _22(s4), _23(s5), _31(s6), _32(s7), _33(s8)
+	{
+
+	}
+
+	union
+	{
+		AXFLOAT3 r[3];
+		struct
+		{
+			float _11; float _12; float _13;
+			float _21; float _22; float _23;
+			float _31; float _32; float _33;
+		};
+	};
+
+};
+
 struct AXFLOAT4X4
 {
 	static AXFLOAT4X4 Identity()
@@ -348,7 +379,7 @@ float inline __vectorcall AXFloat2x2Determinant(const __AXFLOAT2X2PRV& m)
 	return m._11 * m._22 - m._12 * m._21;
 }
 
-float inline __vectorcall AXFloat4x4Determinant(const AXFLOAT4X4& m)
+float inline __vectorcall AXFloat3x3Determinant(const AXFLOAT3X3& m)
 {
 	__AXFLOAT2X2PRV a = __AXFLOAT2X2PRV(m._22, m._23, m._32, m._33);
 	__AXFLOAT2X2PRV b = __AXFLOAT2X2PRV(m._21, m._23, m._31, m._33);
