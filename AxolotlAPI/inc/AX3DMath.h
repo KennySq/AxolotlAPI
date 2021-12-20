@@ -121,6 +121,45 @@ struct AXFLOAT3X3
 
 };
 
+struct AXVECTOR
+{
+	AXVECTOR(float _x, float _y, float _z, float _w)
+		: x(_x), y(_y), z(_z), w(_w)
+	{
+
+	}
+
+	AXVECTOR(const AXFLOAT2& v)
+		: x(v.x), y(v.y)
+	{
+
+	}
+
+	AXVECTOR(const AXFLOAT3& v)
+		: x(v.x), y(v.y), z(v.z)
+	{
+		
+	}
+
+	AXVECTOR(const AXFLOAT4& v)
+		: x(v.x), y(v.y), z(v.z), w(v.w)
+	{
+
+	}
+
+	union
+	{
+		float r[4];
+		struct
+		{
+			float x;
+			float y;
+			float z;
+			float w;
+		};
+	};
+};
+
 struct AXFLOAT4X4
 {
 	static AXFLOAT4X4 Identity()
@@ -392,6 +431,21 @@ float inline __vectorcall AXFloat3x3Determinant(const AXFLOAT3X3& m)
 	return s0 - s1 + s2;
 }
 
+float inline __vectorcall AXFloat4x4Determinant(const AXFLOAT4X4& m)
+{
+	AXFLOAT3X3 a = AXFLOAT3X3(m._22, m._23, m._24, m._32, m._33, m._34, m._42, m._43, m._44);
+	AXFLOAT3X3 b = AXFLOAT3X3(m._12, m._13, m._14, m._32, m._33, m._34, m._42, m._43, m._44);
+	AXFLOAT3X3 c = AXFLOAT3X3(m._12, m._13, m._14, m._22, m._23, m._24, m._42, m._43, m._44);
+	AXFLOAT3X3 d = AXFLOAT3X3(m._12, m._13, m._14, m._22, m._23, m._24, m._32, m._33, m._34);
+
+	float s0 = m._11 * AXFloat3x3Determinant(a);
+	float s1 = m._21 * AXFloat3x3Determinant(b);
+	float s2 = m._31 * AXFloat3x3Determinant(c);
+	float s3 = m._41 * AXFloat3x3Determinant(d);
+
+	return s0 - s1 + s2 - s3;
+}
+
 AXFLOAT4X4 inline __vectorcall AXFloat4x4Multiply(const AXFLOAT4X4& m1, const AXFLOAT4X4& m2)
 {
 	AXFLOAT4X4 mat;
@@ -417,4 +471,29 @@ AXFLOAT4X4 inline __vectorcall AXFloat4x4Multiply(const AXFLOAT4X4& m1, const AX
 	mat._44 = m1._41 * m2._14 + m1._42 * m2._24 + m1._43 * m2._34 + m1._44 * m2._44;
 
 	return mat;
+}
+
+AXFLOAT4X4 inline __vectorcall AXFloat4x4Translate(const AXFLOAT3& translate)
+{
+	return AXFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, translate.x, translate.y, translate.z, 1);
+}
+
+AXFLOAT4X4 inline __vectorcall AXFloat4x4Scale(const AXFLOAT3& scale)
+{
+	return AXFLOAT4X4(scale.x, 0, 0, 0, 0, scale.y, 0, 0, 0, 0, scale.z, 0, 0, 0, 0, 1);
+}
+
+AXFLOAT4X4 inline __vectorcall AXFloat4x4RotationX(float theta)
+{
+	return AXFLOAT4X4(1, 0, 0, 0, 0, cos(theta), sin(theta), 0, 0, -sin(theta), cos(theta), 0, 0, 0, 0, 1);
+}
+
+AXFLOAT4X4 inline __vectorcall AXFloat4x4RotationY(float theta)
+{
+	return AXFLOAT4X4(cos(theta), 0, -sin(theta), 0, 0, 1, 0, 0, sin(theta), 0, cos(theta), 0, 0, 0, 0, 1);
+}
+
+AXFLOAT4X4 inline __vectorcall AXFloat4x4RotationZ(float theta)
+{
+	return AXFLOAT4X4(cos(theta), -sin(theta), 0, 0, sin(theta), cos(theta), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
