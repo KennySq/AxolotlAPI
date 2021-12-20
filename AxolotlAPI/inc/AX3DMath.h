@@ -12,8 +12,16 @@ struct AXFLOAT2
 	{
 
 	}
-	float x;
-	float y;
+
+	union
+	{
+		float r[2];
+		struct
+		{
+			float x;
+			float y;
+		};
+	};
 };
 
 struct AXFLOAT3
@@ -28,9 +36,16 @@ struct AXFLOAT3
 	{
 
 	}
-	float x;
-	float y;
-	float z;
+	union
+	{
+		float r[3];
+		struct
+		{
+			float x;
+			float y;
+			float z;
+		};
+	};
 };
 
 struct AXFLOAT4
@@ -45,10 +60,46 @@ struct AXFLOAT4
 	{
 
 	}
-	float x;
-	float y;
-	float z;
-	float w;
+	union
+	{
+		float r[4];
+		struct
+		{
+			float x;
+			float y;
+			float z;
+			float w;
+		};
+	};
+};
+
+struct AXFLOAT4X4
+{
+	static AXFLOAT4X4 Identity()
+	{
+		return AXFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+	}
+
+	__vectorcall AXFLOAT4X4()
+	{
+
+	}
+	__vectorcall AXFLOAT4X4(float s0, float s1, float s3, float s4, float s5, float s6, float s7, float s8, float s9, float s10, float s11, float s12, float s13, float s14, float s15, float s16)
+		: _11(s0), _12(s1), _13(s3), _14(s4), _21(s5), _22(s6), _23(s7), _24(s8), _31(s9), _32(s10), _33(s11), _34(s12), _41(s13), _42(s14), _43(s15), _44(s16)
+	{
+
+	}
+	union
+	{
+		AXFLOAT4 r[4];
+		struct
+		{
+			float _11; float _12; float _13; float _14;
+			float _21; float _22; float _23; float _24;
+			float _31; float _32; float _33; float _34;
+			float _41; float _42; float _43; float _44;
+		};
+	};
 };
 
 //---------------------------------------------------------------
@@ -252,10 +303,59 @@ float inline __vectorcall AXFloat4Dot(const AXFLOAT4& v1, const AXFLOAT4& v2)
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w;
 }
 
-AXFLOAT2 AXFloat2Cross(const AXFLOAT2& v1, const AXFLOAT2& v2)
+AXFLOAT3 inline __vectorcall AXFloat3Cross(const AXFLOAT3& v1, const AXFLOAT3& v2)
 {
-	static AXFLOAT2 up(0, 1);
+	static AXFLOAT3 right = AXFLOAT3(1, 0, 0), up = AXFLOAT3(0, 1, 0), forward = AXFLOAT3(0, 0, 1);
+
+	AXFLOAT3 s0 = right * (v1.y * v2.z - v1.z * v2.y); 
+	AXFLOAT3 s1 = up * (v1.x * v2.z - v1.z * v2.x);
+	AXFLOAT3 s3 = forward * (v1.x * v2.y - v1.y * v2.x);
+
+	return s0 + s1 + s3;
+}
+
+AXFLOAT2 inline __vectorcall AXFloat2Cross(const AXFLOAT2& v1, const AXFLOAT2& v2)
+{
+	static AXFLOAT2 right = AXFLOAT2(1, 0);
 	
+	AXFLOAT2 s0 = right * (v1.y * v2.x - v1.x * v2.y);
 
+	return AXFLOAT2(s0.x, s0.x);
+}
 
+// -----------------------------------------------------------------
+// Matrix 4x4
+
+float inline __vectorcall AXFloat4x4Determinant(const AXFLOAT4X4& m)
+{
+	return -1.0f;
+
+	// later ^___^...
+}
+
+AXFLOAT4X4 inline __vectorcall AXFloat4x4Multiply(const AXFLOAT4X4& m1, const AXFLOAT4X4& m2)
+{
+	AXFLOAT4X4 mat;
+
+	mat._11 = m1._11 * m2._11 + m1._12 * m2._21 + m1._13 * m2._31 + m1._14 * m2._41;
+	mat._12 = m1._11 * m2._12 + m1._12 * m2._22 + m1._13 * m2._32 + m1._14 * m2._42;
+	mat._13 = m1._11 * m2._13 + m1._12 * m2._23 + m1._13 * m2._33 + m1._14 * m2._43;
+	mat._14 = m1._11 * m2._14 + m1._12 * m2._24 + m1._13 * m2._34 + m1._14 * m2._44;
+
+	mat._21 = m1._21 * m2._11 + m1._22 * m2._21 + m1._23 * m2._31 + m1._24 * m2._41;
+	mat._22 = m1._21 * m2._12 + m1._22 * m2._22 + m1._23 * m2._32 + m1._24 * m2._42;
+	mat._23 = m1._21 * m2._13 + m1._22 * m2._23 + m1._23 * m2._33 + m1._24 * m2._43;
+	mat._24 = m1._21 * m2._14 + m1._22 * m2._24 + m1._23 * m2._34 + m1._24 * m2._44;
+
+	mat._31 = m1._31 * m2._11 + m1._32 * m2._21 + m1._33 * m2._31 + m1._34 * m2._41;
+	mat._32 = m1._31 * m2._12 + m1._32 * m2._22 + m1._33 * m2._32 + m1._34 * m2._42;
+	mat._33 = m1._31 * m2._13 + m1._32 * m2._23 + m1._33 * m2._33 + m1._34 * m2._43;
+	mat._34 = m1._31 * m2._14 + m1._32 * m2._24 + m1._33 * m2._34 + m1._34 * m2._44;
+
+	mat._41 = m1._41 * m2._11 + m1._42 * m2._21 + m1._43 * m2._31 + m1._44 * m2._41;
+	mat._42 = m1._41 * m2._12 + m1._42 * m2._22 + m1._43 * m2._32 + m1._44 * m2._42;
+	mat._43 = m1._41 * m2._13 + m1._42 * m2._23 + m1._43 * m2._33 + m1._44 * m2._43;
+	mat._44 = m1._41 * m2._14 + m1._42 * m2._24 + m1._43 * m2._34 + m1._44 * m2._44;
+
+	return mat;
 }
