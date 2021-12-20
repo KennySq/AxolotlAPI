@@ -1,6 +1,7 @@
 #include<Axolotl.h>
 #include<AX3DMath.h>
 #include "Sample.h"
+#include"inc/Vertex.h"
 
 SampleApp::SampleApp(HWND hWnd)
 {
@@ -13,8 +14,23 @@ SampleApp::SampleApp(HWND hWnd)
 	texDesc.Width = 1280;
 	texDesc.Height = 720;
 
+	Vertex vertices[] =
+	{
+		{-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f},
+		{ 0.0f, 0.75f, 0.0f, 0.0f, 1.0f, 0.0f},
+		{ 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
+	};
+
+	unsigned int indices[] =
+	{
+		0, 1, 2
+	};
+
 	vbDesc.BindFlags = AX_BIND_VERTEX_BUFFER;
-	
+	vbDesc.ByteSize = sizeof(Vertex) * 3;
+
+	ibDesc.BindFlags = AX_BIND_INDEX_BUFFER;
+	ibDesc.ByteSize = sizeof(unsigned int) * 3;
 
 	rtvDesc.Dimension = AX_RTV_DIMENSION_TEXTURE2D;
 
@@ -34,6 +50,11 @@ SampleApp::SampleApp(HWND hWnd)
 
 	mContext = AXCreateContext(CREATE_AXDEVICE_DEBUG);
 	mCmdList = mDevice->CreateCommandList();
+
+	mVertexBuffer = mDevice->CreateBuffer(vbDesc, vertices);
+	mIndexBuffer = mDevice->CreateBuffer(ibDesc, indices);
+
+	return;
 }
 
 SampleApp::~SampleApp()
@@ -73,6 +94,8 @@ void SampleApp::Init()
 
 	AXFLOAT4X4 mat3 = AXFLOAT4X4(5, 3, 77, 45, 33.2, 1.57, 35.66, 43, 69, 21, 12, 5, 68, 9, 11, 49);
 	float det = AXFloat4x4Determinant(mat3);
+
+
 }
 
 void SampleApp::Update(float delta)
@@ -81,8 +104,7 @@ void SampleApp::Update(float delta)
 
 	mContext->ClearRenderTarget(mRTV, clearColor);
 
-	mContext->FinishCommandList(&mCmdList);
-	mContext->ExecuteCommandList(mCmdList);
+	
 }
 
 void SampleApp::Render(float delta)

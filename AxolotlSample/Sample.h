@@ -25,4 +25,7 @@ private:
 
 	std::shared_ptr<AXTexture2D> mTexture;
 	std::shared_ptr<AXRenderTargetView> mRTV;
+
+	std::shared_ptr<AXBuffer> mVertexBuffer;
+	std::shared_ptr<AXBuffer> mIndexBuffer;
 };
