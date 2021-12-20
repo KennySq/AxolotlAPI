@@ -73,6 +73,23 @@ struct AXFLOAT4
 	};
 };
 
+struct __AXFLOAT2X2PRV
+{
+	__AXFLOAT2X2PRV(float s0, float s1, float s2, float s3)
+		: _11(s0), _12(s1), _21(s2), _22(s3)
+	{
+
+	}
+	union
+	{
+		AXFLOAT2 r[2];
+		struct
+		{
+			float _11, _12;
+			float _21, _22;
+		};
+	};
+};
 struct AXFLOAT4X4
 {
 	static AXFLOAT4X4 Identity()
@@ -326,11 +343,22 @@ AXFLOAT2 inline __vectorcall AXFloat2Cross(const AXFLOAT2& v1, const AXFLOAT2& v
 // -----------------------------------------------------------------
 // Matrix 4x4
 
+float inline __vectorcall AXFloat2x2Determinant(const __AXFLOAT2X2PRV& m)
+{
+	return m._11 * m._22 - m._12 * m._21;
+}
+
 float inline __vectorcall AXFloat4x4Determinant(const AXFLOAT4X4& m)
 {
-	return -1.0f;
+	__AXFLOAT2X2PRV a = __AXFLOAT2X2PRV(m._22, m._23, m._32, m._33);
+	__AXFLOAT2X2PRV b = __AXFLOAT2X2PRV(m._21, m._23, m._31, m._33);
+	__AXFLOAT2X2PRV c = __AXFLOAT2X2PRV(m._21, m._22, m._31, m._32);
 
-	// later ^___^...
+	float s0 = m._11 * AXFloat2x2Determinant(a);
+	float s1 = m._12 * AXFloat2x2Determinant(b);
+	float s2 = m._13 * AXFloat2x2Determinant(c);
+
+	return s0 - s1 + s2;
 }
 
 AXFLOAT4X4 inline __vectorcall AXFloat4x4Multiply(const AXFLOAT4X4& m1, const AXFLOAT4X4& m2)
