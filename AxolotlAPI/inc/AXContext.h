@@ -3,6 +3,7 @@
 struct Command;
 struct AXCommandList;
 struct AXRenderTargetView;
+struct AXBuffer;
 #define CREATE_AXDEVICE_DEBUG 0xffffffff
 
 struct AXContext
@@ -10,6 +11,9 @@ struct AXContext
 public:
 	AXContext(unsigned int flag);
 	~AXContext();
+
+	void IASetVertexBuffer(std::shared_ptr<AXBuffer>* const buffer, unsigned int count, unsigned int* const stride, unsigned int* const offset);
+	void IASetIndexBuffer(std::shared_ptr<AXBuffer> buffer);
 
 	void ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4]);
 

@@ -1,10 +1,12 @@
 #include "pch.h"
 #include "AXContext.h"
+#include"AXUtil.h"
 #include"AXCommandList.h"
 #include"Command.h"
 
 #include"AXTexture.h"
 #include"AXRenderTargetView.cuh"
+#include"AXBuffer.cuh"
 
 AXContext::AXContext(unsigned int flag)
 	: mFlag(flag), mCommandIndex(0), mCommandBuffer(1024)
@@ -15,13 +17,8 @@ AXContext::~AXContext()
 {
 }
 
-__global__ void KernelClearRenderTarget(void* ptr, unsigned int width, unsigned height, unsigned int componentSize, float r, float g, float b, float a)
+inline __device__ __host__ DWORD deviceConvertRGB(float r, float g, float b, float a)
 {
-	unsigned int blockId = blockIdx.x + blockIdx.y * gridDim.x;
-	unsigned int index = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
-	
-	DWORD* asPixel = reinterpret_cast<DWORD*>(ptr);
-
 	BYTE comp0 = r * 255.999f;
 	BYTE comp1 = g * 255.999f;
 	BYTE comp2 = b * 255.999f;
@@ -29,12 +26,39 @@ __global__ void KernelClearRenderTarget(void* ptr, unsigned int width, unsigned 
 
 	DWORD color = 0;
 
-	color |= (comp3 << 24);
-	color |= (comp0 << 16);
-	color |= (comp1 << 8);
-	color |= (comp2 << 0);
+	color |= (comp3 << 24); // alpha first.
+	color |= (comp0 << 16); // r
+	color |= (comp1 << 8);  // g
+	color |= (comp2 << 0);  // b
 
-	asPixel[index] = color;
+	return color;
+}
+
+__global__ void KernelClearRenderTarget(void* ptr, unsigned int width, unsigned height, unsigned int componentSize, float r, float g, float b, float a)
+{
+	unsigned int blockId = blockIdx.x + blockIdx.y * gridDim.x;
+	unsigned int index = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
+	
+	DWORD* asPixel = reinterpret_cast<DWORD*>(ptr);
+
+	asPixel[index] = deviceConvertRGB(r, g, b, a);
+}
+
+void AXContext::IASetVertexBuffer(std::shared_ptr<AXBuffer>* const buffer, unsigned int count, unsigned int* const stride, unsigned int* const offset)
+{
+	for (unsigned int i = 0; i < count; i++)
+	{
+		AX_BIND_FLAG bindFlag = buffer[i]->mBindFlags;
+
+		if (bindFlag & AX_BIND_VERTEX_BUFFER)
+		{
+			Log("This buffer cannot be bound on IA stage.");
+		}
+	}
+}
+
+void AXContext::IASetIndexBuffer(std::shared_ptr<AXBuffer> buffer)
+{
 }
 
 void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4])
@@ -46,7 +70,7 @@ void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float
 	unsigned int width = desc.Width;
 	unsigned int height = desc.Height;
 
-	dim3 block = dim3(8, 8, 1);
+	dim3 block = dim3(32, 30, 1);
 	dim3 grid = dim3(width / block.y, height / block.y, 1);
 
 	Command cmd;
