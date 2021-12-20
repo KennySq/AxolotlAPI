@@ -34,12 +34,18 @@ __declspec(dllexport) __global__ void KernelViewRaw(unsigned int offset, void* r
 AXDevice::AXDevice(unsigned int flag)
 	: mDeviceFlag(flag)
 {
-	mMemory = std::make_shared<AXDeviceMemoryPool>(8294400);
-	//KernelWriteRaw << <1, 1, 1 >> > (162, mMemory->GetRaw(), 0);
-	//cudaDeviceSynchronize();
+	cudaDeviceProp prop;
+	int deviceIndex;
 
-	//KernelViewRaw<<<1,1,1>>>(0, mMemory->GetRaw());
-	//cudaDeviceSynchronize();
+	cudaDeviceSynchronize();
+
+	cudaGetDevice(&deviceIndex);
+	cudaGetDeviceProperties(&prop, deviceIndex);
+	
+	std::string memoryStr = std::to_string(prop.totalGlobalMem / 4) + " bytes";
+	Log(std::string("Available device memory : ") + memoryStr);
+
+	mMemory = std::make_shared<AXDeviceMemoryPool>(prop.totalGlobalMem / 4);
 }
 
 AXDevice::~AXDevice()
@@ -65,7 +71,7 @@ std::shared_ptr<AXTexture2D> AXDevice::CreateTexture2D(const AX_TEXTURE2D_DESC& 
 	tex->mHeight = desc.Height;
 	tex->mFormat = desc.Format;
 	tex->mRaw = devicePtr;
-	
+
 	mInterfaceCounter++;
 
 	return tex;
@@ -74,7 +80,7 @@ std::shared_ptr<AXTexture2D> AXDevice::CreateTexture2D(const AX_TEXTURE2D_DESC& 
 std::shared_ptr<AXCommandList> AXDevice::CreateCommandList()
 {
 	std::shared_ptr<AXCommandList> cmdList = std::make_shared<AXCommandList>();
-	
+
 	cmdList->mCommands.resize(1024);
 
 	mInterfaceCounter++;
@@ -82,11 +88,23 @@ std::shared_ptr<AXCommandList> AXDevice::CreateCommandList()
 	return cmdList;
 }
 
-std::shared_ptr<AXBuffer> AXDevice::CreateBuffer(const AX_BUFFER_DESC& desc)
+std::shared_ptr<AXBuffer> AXDevice::CreateBuffer(const AX_BUFFER_DESC& desc, void* subResource)
 {
 	std::shared_ptr<AXBuffer> buffer = std::make_shared<AXBuffer>();
 
 	buffer->mRaw = mMemory->Alloc(desc.ByteSize);
+
+	if (subResource != nullptr)
+	{
+		cudaError_t error = cudaMemcpy(buffer->mRaw, subResource, desc.ByteSize, cudaMemcpyHostToDevice);
+
+		if (error != NULL)
+		{
+			Log("subresource copy fail");
+			Log(cudaGetErrorString(error));
+		}
+	}
+
 	buffer->mSize = desc.ByteSize;
 	buffer->mBindFlags = desc.BindFlags;
 
