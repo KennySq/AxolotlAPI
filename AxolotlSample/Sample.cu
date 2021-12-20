@@ -53,6 +53,26 @@ void SampleApp::Init()
 	AXFLOAT2 fl3(1, 0);
 
 	float len = AXFloat2Length(fl3);
+
+	AXFLOAT3 v1 = AXFLOAT3(0, 1, 0);
+	AXFLOAT3 v2 = AXFLOAT3(0, 0, 1);
+
+	AXFLOAT3 crossed = AXFloat3Cross(v1, v2);
+
+	AXFLOAT2 v3 = AXFLOAT2(1, 0);
+	AXFLOAT2 v4 = AXFLOAT2(0, 1);
+
+	AXFLOAT2 crossed2d = AXFloat2Cross(v3, v4);
+
+	AXFLOAT4X4 mat1, mat2;
+
+	mat1 = AXFLOAT4X4::Identity();
+	mat2 = AXFLOAT4X4::Identity();
+
+	mat1 = AXFloat4x4Multiply(mat1, mat2);
+
+	AXFLOAT4X4 mat3 = AXFLOAT4X4(5, 3, 77, 45, 33.2, 1.57, 35.66, 43, 69, 21, 12, 5, 68, 9, 11, 49);
+	float det = AXFloat4x4Determinant(mat3);
 }
 
 void SampleApp::Update(float delta)
