@@ -55,4 +55,9 @@
       <Filter>소스 파일</Filter>
     </CudaCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="hlsl\testShader.hlsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
 </Project>

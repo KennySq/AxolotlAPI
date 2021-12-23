@@ -1,5 +1,7 @@
 #include<Axolotl.h>
 #include<AX3DMath.h>
+#include<AXShaderCompiler.h>
+
 #include "Sample.h"
 #include"inc/Vertex.h"
 
@@ -54,7 +56,10 @@ SampleApp::SampleApp(HWND hWnd)
 	mVertexBuffer = mDevice->CreateBuffer(vbDesc, vertices);
 	mIndexBuffer = mDevice->CreateBuffer(ibDesc, indices);
 
+	AXCompileFromFile("C:/users/odess/Documents/AxolotlAPI/AxolotlSample/hlsl/testShader.hlsl", "vs_5_0", "vert", 0);
+
 	return;
+
 }
 
 SampleApp::~SampleApp()
@@ -94,7 +99,7 @@ void SampleApp::Init()
 
 	AXFLOAT4X4 mat3 = AXFLOAT4X4(5, 3, 77, 45, 33.2, 1.57, 35.66, 43, 69, 21, 12, 5, 68, 9, 11, 49);
 	float det = AXFloat4x4Determinant(mat3);
-
+	
 
 }
 
