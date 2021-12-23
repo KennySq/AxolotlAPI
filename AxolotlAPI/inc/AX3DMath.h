@@ -1,11 +1,12 @@
 #pragma once
 
+#include<immintrin.h>
+
 struct AXFLOAT2
 {
 	__vectorcall AXFLOAT2(float _x, float _y)
 		: x(_x), y(_y)
 	{
-
 	}
 	__vectorcall AXFLOAT2()
 		: x(.0f), y(.0f)
@@ -82,7 +83,7 @@ struct __AXFLOAT2X2PRV
 	}
 	union
 	{
-		AXFLOAT2 r[2];
+		float r[4];
 		struct
 		{
 			float _11, _12;
@@ -110,7 +111,7 @@ struct AXFLOAT3X3
 
 	union
 	{
-		AXFLOAT3 r[3];
+		__m128 r;
 		struct
 		{
 			float _11; float _12; float _13;
@@ -149,7 +150,7 @@ struct AXVECTOR
 
 	union
 	{
-		float r[4];
+		__m128 r;
 		struct
 		{
 			float x;
