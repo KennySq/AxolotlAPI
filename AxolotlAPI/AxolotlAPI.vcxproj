@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="inc\AX3DMath.h" />
     <ClInclude Include="inc\AXBuffer.cuh" />
+    <ClInclude Include="inc\AXBytecode.h" />
     <ClInclude Include="inc\AXChain.cuh" />
     <ClInclude Include="inc\AXDeviceMemoryPool.cuh" />
     <ClInclude Include="inc\AXDeviceTexture2D.cuh" />
@@ -167,7 +168,9 @@
     <ClInclude Include="inc\AXContext.h" />
     <ClInclude Include="inc\AXDevice.cuh" />
     <ClInclude Include="inc\AXRenderTargetView.cuh" />
+    <ClInclude Include="inc\AXShaderCompiler.h" />
     <ClInclude Include="inc\AXUtil.h" />
+    <ClInclude Include="inc\AXVertexStage.h" />
     <ClInclude Include="inc\Command.h" />
     <ClInclude Include="inc\AXCommandList.h" />
     <ClInclude Include="inc\framework.h" />
@@ -196,6 +199,7 @@
     <CudaCompile Include="src\AXCommandList.cpp">
       <FileType>Document</FileType>
     </CudaCompile>
+    <ClCompile Include="src\AXBytecode.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
