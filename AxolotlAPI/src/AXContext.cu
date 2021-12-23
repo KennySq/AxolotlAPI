@@ -49,8 +49,8 @@ void AXContext::IASetVertexBuffer(std::shared_ptr<AXBuffer>* const buffer, unsig
 	for (unsigned int i = 0; i < count; i++)
 	{
 		AX_BIND_FLAG bindFlag = buffer[i]->mBindFlags;
-
-		if (bindFlag & AX_BIND_VERTEX_BUFFER)
+		
+		if ((bindFlag & AX_BIND_VERTEX_BUFFER) != 1)
 		{
 			Log("This buffer cannot be bound on IA stage.");
 		}
@@ -59,6 +59,18 @@ void AXContext::IASetVertexBuffer(std::shared_ptr<AXBuffer>* const buffer, unsig
 
 void AXContext::IASetIndexBuffer(std::shared_ptr<AXBuffer> buffer)
 {
+	if (buffer == nullptr)
+	{
+		Log("Invalid argument");
+	}
+
+	AX_BIND_FLAG bindFlag = buffer->mBindFlags;
+	if ((bindFlag & AX_BIND_INDEX_BUFFER) != 1)
+	{
+		Log("This buffer cannot be bound on IA stage.");
+	}
+
+
 }
 
 void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4])
