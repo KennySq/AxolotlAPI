@@ -7,7 +7,7 @@ __global__ void KernelVertexProcess(void* vertices, unsigned int vertexCount, vo
 {
 	// do compute based on vertex shader.
 	// output structure must be determined before vertex stage. (IA stage)
-
+	
 
 	return;
 }
