@@ -28,4 +28,6 @@ private:
 
 	std::shared_ptr<AXBuffer> mVertexBuffer;
 	std::shared_ptr<AXBuffer> mIndexBuffer;
+
+	
 };

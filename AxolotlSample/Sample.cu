@@ -56,7 +56,9 @@ SampleApp::SampleApp(HWND hWnd)
 	mVertexBuffer = mDevice->CreateBuffer(vbDesc, vertices);
 	mIndexBuffer = mDevice->CreateBuffer(ibDesc, indices);
 
-	AXCompileFromFile("C:/users/odess/Documents/AxolotlAPI/AxolotlSample/hlsl/testShader.hlsl", "vs_5_0", "vert", 0);
+	std::shared_ptr<AXBytecode> mVertexBlob, mPixelBlob;
+
+	bool compileResult = AXCompileFromFile("C:/Users/odess/Desktop/Projects/Axolotl/AxolotlSample/hlsl/testShader.hlsl", "vs_5_0", "vert", 0, &mVertexBlob);
 
 	return;
 
