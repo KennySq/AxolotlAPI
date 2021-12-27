@@ -46,7 +46,6 @@ __device__ void deviceDrawLine(void* ptr, AXFLOAT2 p0, AXFLOAT2 p1, unsigned int
 			deviceSetPixel(ptr, point.x, point.y, width, 1.0f, 0.0, 0.0f, 0.0f);
 			point.x += slope;
 			point.y += i;
-			// update from here 2021/12/27 2:50 PM
 		}
 	}
 }
@@ -68,7 +67,7 @@ __global__ void KernelDetermineRasterize(void* renderTarget, AXFLOAT2* projected
 
 
 }
-void AXRasterizer::Process(std::shared_ptr<IAXResource> texture, unsigned int width, unsigned int height, AXFLOAT2* projectedData, unsigned int vertexCount)
+void AXRasterizer::Process(std::shared_ptr<IAXResource> texture, unsigned int width, unsigned int height, void* projectedData, unsigned int vertexCount)
 {
 	// update from here 2021/12/27 11:37 AM
 	dim3 grid = dim3(vertexCount / 3);
