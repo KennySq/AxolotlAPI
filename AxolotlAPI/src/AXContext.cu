@@ -4,6 +4,13 @@
 #include"AXCommandList.h"
 #include"Command.h"
 
+#include"AXVertexStage.cuh"
+#include"AXRasterizer.cuh"
+#include"AXOutputMerger.cuh"
+#include"AXPixelStage.cuh"
+
+#include"AX3DMath.h"
+
 #include"AXTexture.h"
 #include"AXRenderTargetView.cuh"
 #include"AXBuffer.cuh"
@@ -15,23 +22,6 @@ AXContext::AXContext(unsigned int flag)
 
 AXContext::~AXContext()
 {
-}
-
-inline __device__ __host__ DWORD deviceConvertRGB(float r, float g, float b, float a)
-{
-	BYTE comp0 = r * 255.999f;
-	BYTE comp1 = g * 255.999f;
-	BYTE comp2 = b * 255.999f;
-	BYTE comp3 = a * 255.999f;
-
-	DWORD color = 0;
-
-	color |= (comp3 << 24); // alpha first.
-	color |= (comp0 << 16); // r
-	color |= (comp1 << 8);  // g
-	color |= (comp2 << 0);  // b
-
-	return color;
 }
 
 __global__ void KernelClearRenderTarget(void* ptr, unsigned int width, unsigned height, unsigned int componentSize, float r, float g, float b, float a)
@@ -71,6 +61,20 @@ void AXContext::IASetIndexBuffer(std::shared_ptr<AXBuffer> buffer)
 	}
 
 
+}
+
+void AXContext::DrawIndexed(unsigned int indexCount, unsigned int offset)
+{
+	std::shared_ptr<AXRenderTargetView> rtv = mOutputStage->GetRenderTargetView(0);
+	std::shared_ptr<IAXResource> resource = rtv->mResource;
+	std::shared_ptr<AXTexture2D> asTex2d = std::static_pointer_cast<AXTexture2D>(resource);
+
+	AX_TEXTURE2D_DESC texDesc = asTex2d->GetDesc();
+
+	mVertexStage->Process(mAssembler);
+	cudaDeviceSynchronize();
+	
+	mRasterStage->Process(resource, texDesc.Width, texDesc.Height, )
 }
 
 void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4])

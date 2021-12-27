@@ -11,6 +11,7 @@ enum AX_BIND_FLAG
 struct IAXResource
 {
 	friend struct AXContext;
+	friend struct AXRasterizer;
 
 
 protected:

@@ -15,6 +15,7 @@
 #include<memory>
 #include<vector>
 #include<map>
+#include<assert.h>
 
 #include<cuda.h>
 #include<device_functions.h>
