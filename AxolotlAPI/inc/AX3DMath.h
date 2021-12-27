@@ -498,3 +498,20 @@ AXFLOAT4X4 inline __vectorcall AXFloat4x4RotationZ(float theta)
 {
 	return AXFLOAT4X4(cos(theta), -sin(theta), 0, 0, sin(theta), cos(theta), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
+
+inline __device__ __host__ DWORD deviceConvertRGB(float r, float g, float b, float a)
+{
+	BYTE comp0 = r * 255.999f;
+	BYTE comp1 = g * 255.999f;
+	BYTE comp2 = b * 255.999f;
+	BYTE comp3 = a * 255.999f;
+
+	DWORD color = 0;
+
+	color |= (comp3 << 24); // alpha first.
+	color |= (comp0 << 16); // r
+	color |= (comp1 << 8);  // g
+	color |= (comp2 << 0);  // b
+
+	return color;
+}
