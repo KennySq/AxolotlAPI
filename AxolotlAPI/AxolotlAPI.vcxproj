@@ -164,7 +164,9 @@
     <ClInclude Include="inc\AXDeviceMemoryPool.cuh" />
     <ClInclude Include="inc\AXDeviceTexture2D.cuh" />
     <ClInclude Include="inc\AXDeviceUtil.cuh" />
+    <ClInclude Include="inc\AXFormat.h" />
     <ClInclude Include="inc\AXInputAssembler.cuh" />
+    <ClInclude Include="inc\AXInputLayout.cuh" />
     <ClInclude Include="inc\Axolotl.h" />
     <ClInclude Include="inc\AXContext.h" />
     <ClInclude Include="inc\AXDevice.cuh" />
@@ -192,6 +194,7 @@
     <CudaCompile Include="src\AXDeviceMemoryPool.cu" />
     <CudaCompile Include="src\AXDeviceTexture2D.cu" />
     <CudaCompile Include="src\AXInputAssembler.cu" />
+    <CudaCompile Include="src\AXInputLayout.cu" />
     <CudaCompile Include="src\AXOutputMerger.cu" />
     <CudaCompile Include="src\AXPixelStage.cu" />
     <CudaCompile Include="src\AXRasterizer.cu" />

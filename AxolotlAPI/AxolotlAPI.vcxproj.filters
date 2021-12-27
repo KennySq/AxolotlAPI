@@ -96,6 +96,10 @@
       <Filter>헤더 파일\private</Filter>
     </ClInclude>
     <ClInclude Include="inc\AXOutputMerger.cuh" />
+    <ClInclude Include="inc\AXInputLayout.cuh" />
+    <ClInclude Include="inc\AXFormat.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -149,5 +153,6 @@
       <Filter>소스 파일\private</Filter>
     </CudaCompile>
     <CudaCompile Include="src\AXOutputMerger.cu" />
+    <CudaCompile Include="src\AXInputLayout.cu" />
   </ItemGroup>
 </Project>
