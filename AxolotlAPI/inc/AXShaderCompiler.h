@@ -3,7 +3,7 @@
 #include"AXUtil.h"
 #include"AXBytecode.h"
 
-static bool AXCompileFromFile(const char* path, const char* target, const char* entry, unsigned int flag, std::shared_ptr<AXBytecode> pOutBytecode)
+static bool AXCompileFromFile(const char* path, const char* target, const char* entry, unsigned int flag, std::shared_ptr<AXBytecode>* pOutBytecode)
 {
 	std::string fileStr = path;
 	size_t slashIndex = fileStr.find_last_of("/");
@@ -14,7 +14,7 @@ static bool AXCompileFromFile(const char* path, const char* target, const char* 
 	outPath += ".o";
 	std::string args = std::string(" /T ") + target + " /E " + entry + " /Fo " + outPath;
 	
-	std::string exeCmd = std::string("C:/Users/odess/Documents/AxolotlAPI/AxolotlAPI/x64/Debug/fxc ");
+	std::string exeCmd = std::string("C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x64/fxc ");
 	std::string arg = exeCmd + std::string(path) + args;
 
 	STARTUPINFOA info{};
