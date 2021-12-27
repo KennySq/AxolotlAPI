@@ -17,6 +17,10 @@ public:
 	explicit AXBuffer();
 	~AXBuffer();
 
+	void* GetVirtual() const { return mVirtual; }
+
+	AX_BUFFER_DESC GetDesc() const;
+
 private:
 	void* mVirtual;
 	unsigned int mSize;
