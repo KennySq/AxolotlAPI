@@ -4,6 +4,7 @@
 #include"AXCommandList.h"
 #include"Command.h"
 
+#include"AXInputAssembler.cuh"
 #include"AXVertexStage.cuh"
 #include"AXRasterizer.cuh"
 #include"AXOutputMerger.cuh"
@@ -34,8 +35,10 @@ __global__ void KernelClearRenderTarget(void* ptr, unsigned int width, unsigned 
 	asPixel[index] = deviceConvertRGB(r, g, b, a);
 }
 
-void AXContext::IASetVertexBuffer(std::shared_ptr<AXBuffer>* const buffer, unsigned int count, unsigned int* const stride, unsigned int* const offset)
+void AXContext::IASetVertexBuffer(std::shared_ptr<AXBuffer>* const buffer, unsigned int count, unsigned int* const strides, unsigned int* const offsets)
 {
+	assert(strides != nullptr && "strides cannot be null.");
+
 	for (unsigned int i = 0; i < count; i++)
 	{
 		AX_BIND_FLAG bindFlag = buffer[i]->mBindFlags;
@@ -44,6 +47,9 @@ void AXContext::IASetVertexBuffer(std::shared_ptr<AXBuffer>* const buffer, unsig
 		{
 			Log("This buffer cannot be bound on IA stage.");
 		}
+
+		mAssembler->VertexBuffers.push_back(buffer[i]);
+		mAssembler->VertexStrides.push_back(strides[i]);
 	}
 }
 
@@ -60,6 +66,8 @@ void AXContext::IASetIndexBuffer(std::shared_ptr<AXBuffer> buffer)
 		Log("This buffer cannot be bound on IA stage.");
 	}
 
+	mAssembler->IndexBuffer = buffer;
+
 
 }
 
@@ -70,11 +78,13 @@ void AXContext::DrawIndexed(unsigned int indexCount, unsigned int offset)
 	std::shared_ptr<AXTexture2D> asTex2d = std::static_pointer_cast<AXTexture2D>(resource);
 
 	AX_TEXTURE2D_DESC texDesc = asTex2d->GetDesc();
+	unsigned int vertexCount = mAssembler->VertexBuffers[0]->mSize / mAssembler->VertexStrides[0];
 
 	mVertexStage->Process(mAssembler);
 	cudaDeviceSynchronize();
 	
-	mRasterStage->Process(resource, texDesc.Width, texDesc.Height, )
+	
+	mRasterStage->Process(resource, texDesc.Width, texDesc.Height, mVertexStage->GetOutput(), vertexCount);
 }
 
 void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4])
