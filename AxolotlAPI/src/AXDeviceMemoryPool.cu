@@ -29,7 +29,7 @@ AXDeviceMemoryPool::AXDeviceMemoryPool(size_t size)
 		Log(cudaGetErrorString(error));
 	}
 
-	Log(std::string("Memory requesting success, " + sizeStr + " bytes allocated."));
+	Log(std::string("Memory request success, " + sizeStr + " bytes allocated."));
 }
 
 AXDeviceMemoryPool::~AXDeviceMemoryPool()
