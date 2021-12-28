@@ -6,6 +6,7 @@
 #include"AXDeviceTexture2D.cuh"
 #include"AXDeviceMemoryPool.cuh"
 #include"AXBuffer.cuh"
+#include"AXInputLayout.cuh"
 
 #include"IAXResource.h"
 
@@ -86,6 +87,20 @@ std::shared_ptr<AXCommandList> AXDevice::CreateCommandList()
 	mInterfaceCounter++;
 
 	return cmdList;
+}
+
+std::shared_ptr<AXInputLayout> AXDevice::CreateInputLayout(AX_INPUT_ELEMENT* const inputElements, unsigned int elementCount)
+{
+	std::shared_ptr<AXInputLayout> il = std::make_shared<AXInputLayout>();
+	
+	il->mElements.resize(elementCount);
+
+	for (unsigned int i = 0; i < elementCount; i++)
+	{	
+		il->mElements[i] = inputElements[i];
+	}
+
+	return il;
 }
 
 std::shared_ptr<AXBuffer> AXDevice::CreateBuffer(const AX_BUFFER_DESC& desc, void* subResource)

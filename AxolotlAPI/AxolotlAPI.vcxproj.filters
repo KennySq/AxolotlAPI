@@ -78,12 +78,6 @@
     <ClInclude Include="inc\AX3DMath.h">
       <Filter>헤더 파일\public</Filter>
     </ClInclude>
-    <ClInclude Include="inc\AXShaderCompiler.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\AXBytecode.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="inc\AXDeviceUtil.cuh">
       <Filter>헤더 파일\private</Filter>
     </ClInclude>
@@ -96,9 +90,17 @@
       <Filter>헤더 파일\private</Filter>
     </ClInclude>
     <ClInclude Include="inc\AXOutputMerger.cuh" />
-    <ClInclude Include="inc\AXInputLayout.cuh" />
+    <ClInclude Include="inc\AXInputLayout.cuh">
+      <Filter>헤더 파일\public</Filter>
+    </ClInclude>
     <ClInclude Include="inc\AXFormat.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\public</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXShaderCompiler.h">
+      <Filter>헤더 파일\public</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXBytecode.h">
+      <Filter>헤더 파일\public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +155,8 @@
       <Filter>소스 파일\private</Filter>
     </CudaCompile>
     <CudaCompile Include="src\AXOutputMerger.cu" />
-    <CudaCompile Include="src\AXInputLayout.cu" />
+    <CudaCompile Include="src\AXInputLayout.cu">
+      <Filter>소스 파일\public</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

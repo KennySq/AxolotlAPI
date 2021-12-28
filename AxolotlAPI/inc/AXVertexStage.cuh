@@ -1,6 +1,7 @@
 #pragma once
 struct AXBuffer;
 struct AXInputAssembler;
+struct AX_INPUT_ELEMENT;
 
 struct AXVertexStage
 {
@@ -13,5 +14,6 @@ public:
 	void* GetOutput() const { return mVertexOutput; }
 
 private:
+	std::vector<AX_INPUT_ELEMENT> mOutputElements;
 	void* mVertexOutput;
 };

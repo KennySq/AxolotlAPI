@@ -28,6 +28,8 @@ public:
 	std::shared_ptr<AXTexture2D> CreateTexture2D(const AX_TEXTURE2D_DESC& desc);
 	std::shared_ptr<AXCommandList> CreateCommandList();
 
+	std::shared_ptr<AXInputLayout> CreateInputLayout(AX_INPUT_ELEMENT* const inputElements, unsigned int elementCount);
+
 	std::shared_ptr<AXBuffer> CreateBuffer(const AX_BUFFER_DESC& desc, void* subResource);
 
 	std::shared_ptr<AXRenderTargetView> CreateRenderTargetView(std::shared_ptr<IAXResource> resource, const AX_RENDER_TARGET_VIEW_DESC& desc);
