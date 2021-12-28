@@ -82,9 +82,8 @@ void AXContext::DrawIndexed(unsigned int indexCount, unsigned int offset)
 
 	mVertexStage->Process(mAssembler);
 	cudaDeviceSynchronize();
-	
-	
 	mRasterStage->Process(resource, texDesc.Width, texDesc.Height, mVertexStage->GetOutput(), vertexCount);
+	cudaDeviceSynchronize();
 }
 
 void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4])
