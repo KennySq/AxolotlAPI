@@ -7,6 +7,8 @@ struct AXTexture2D;
 struct AXRenderTargetView;
 struct AXDeviceMemoryPool;
 struct AXBuffer;
+struct AXVertexShader;
+struct AXBytecode;
 
 struct AX_TEXTURE2D_DESC;
 struct AX_RENDER_TARGET_VIEW_DESC;
@@ -33,6 +35,8 @@ public:
 	std::shared_ptr<AXBuffer> CreateBuffer(const AX_BUFFER_DESC& desc, void* subResource);
 
 	std::shared_ptr<AXRenderTargetView> CreateRenderTargetView(std::shared_ptr<IAXResource> resource, const AX_RENDER_TARGET_VIEW_DESC& desc);
+
+	std::shared_ptr<AXVertexShader> CreateVertexShader(std::shared_ptr<AXBytecode> bytecode);
 
 private:
 	HWND mWinHandle;

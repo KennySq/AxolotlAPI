@@ -8,6 +8,11 @@
 #include"AXBuffer.cuh"
 #include"AXInputLayout.cuh"
 
+#include"AXVertexShader.cuh"
+
+#include"AXBytecode.h"
+
+
 #include"IAXResource.h"
 
 #include<Windows.h>
@@ -148,4 +153,10 @@ std::shared_ptr<AXRenderTargetView> AXDevice::CreateRenderTargetView(std::shared
 	rtv->mResource = resource;
 
 	return rtv;
+}
+
+std::shared_ptr<AXVertexShader> AXDevice::CreateVertexShader(std::shared_ptr<AXBytecode> bytecode)
+{
+	//SlimShader::BytecodeReader reader = SlimShader::BytecodeReader(bytecode->)
+	//return std::shared_ptr<AXVertexShader>();
 }
