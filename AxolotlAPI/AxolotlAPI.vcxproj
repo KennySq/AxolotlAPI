@@ -79,8 +79,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)inc;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\include</IncludePath>
-    <LibraryPath>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)inc;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\include;$(ProjectDir)SlimShader\Include</IncludePath>
+    <LibraryPath>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\lib\x64;$(ProjectDir)SlimShader\Library;$(LibraryPath)</LibraryPath>
     <TargetName>Axolotl</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -130,6 +130,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)SlimShader\include;$(ProjectDir)SlimShader\Dependencies\Boost.1.51.0\include;$(ProjectDir)SlimShader\Dependencies\boolinq\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -174,8 +175,10 @@
     <ClInclude Include="inc\AXPixelStage.cuh" />
     <ClInclude Include="inc\AXRasterizer.cuh" />
     <ClInclude Include="inc\AXRenderTargetView.cuh" />
+    <ClInclude Include="inc\AXShader.h" />
     <ClInclude Include="inc\AXShaderCompiler.h" />
     <ClInclude Include="inc\AXUtil.h" />
+    <ClInclude Include="inc\AXVertexShader.cuh" />
     <ClInclude Include="inc\AXVertexStage.cuh" />
     <ClInclude Include="inc\Command.h" />
     <ClInclude Include="inc\AXCommandList.h" />
@@ -204,6 +207,7 @@
     <CudaCompile Include="src\AXContext.cu">
       <FileType>Document</FileType>
     </CudaCompile>
+    <CudaCompile Include="src\AXVertexShader.cu" />
     <CudaCompile Include="src\Command.cu">
       <FileType>Document</FileType>
     </CudaCompile>
@@ -214,6 +218,7 @@
     <CudaCompile Include="src\AXVertexStage.cu">
       <FileType>Document</FileType>
     </CudaCompile>
+    <ClCompile Include="src\AXShader.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>

@@ -102,12 +102,19 @@
     <ClInclude Include="inc\AXBytecode.h">
       <Filter>헤더 파일\public</Filter>
     </ClInclude>
+    <ClInclude Include="inc\AXShader.h">
+      <Filter>소스 파일\private</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXVertexShader.cuh" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\AXBytecode.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AXShader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -158,5 +165,6 @@
     <CudaCompile Include="src\AXInputLayout.cu">
       <Filter>소스 파일\public</Filter>
     </CudaCompile>
+    <CudaCompile Include="src\AXVertexShader.cu" />
   </ItemGroup>
 </Project>

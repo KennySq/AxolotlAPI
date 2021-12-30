@@ -25,8 +25,10 @@
 #include<device_launch_parameters.h>
 #include<thrust\functional.h>
 
+#include<DxbcContainer.h>
 
 #pragma comment(lib, "cudart.lib")
+#pragma comment(lib, "SlibShader.lib")
 
 #endif //PCH_H
 
