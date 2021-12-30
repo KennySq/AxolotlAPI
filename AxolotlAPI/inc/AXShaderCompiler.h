@@ -1,9 +1,10 @@
 #pragma once
 #include<pch.h>
+#include<fstream>
 #include"AXUtil.h"
 #include"AXBytecode.h"
 
-static bool AXCompileFromFile(const char* path, const char* target, const char* entry, unsigned int flag, std::shared_ptr<AXBytecode>* pOutBytecode)
+static bool AXCompileFromFile(const char* path, const char* target, const char* entry, unsigned int flag, std::shared_ptr<AXBytecode> pOutBytecode)
 {
 	std::string fileStr = path;
 	size_t slashIndex = fileStr.find_last_of("/");
@@ -45,6 +46,29 @@ static bool AXCompileFromFile(const char* path, const char* target, const char* 
 
 	CloseHandle(processInfo.hProcess);
 	CloseHandle(processInfo.hThread);
+
+	std::ifstream file;
+	
+	file.open(path, std::ifstream::binary);
+
+	if (!file)
+	{
+		std::cout << "Failed.\n";
+	}
+
+	file.seekg(0, file.end);
+
+	size_t binarySize = file.tellg();
+
+	file.seekg(0, file.beg);
+
+	
+	unsigned char* binaryPtr = new unsigned char[binarySize];
+	
+	file.read((char*)binaryPtr, binarySize);
+	file.close();
+	
+	pOutBytecode = std::make_shared<AXBytecode>(binaryPtr, binarySize);
 
 	return result;
 }
