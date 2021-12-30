@@ -58,3 +58,13 @@ static void Log(size_t numeric)
 
 	std::cout << std::put_time(&localTime, "%d/%m/%y %H:%M:%S | ") << numeric << '\n';
 }
+
+template<typename _Ty>
+__device__ _Ty* Cast(void* ptr)
+{
+	_Ty* castPtr = reinterpret_cast<_Ty*>(ptr);
+
+	castPtr = new (*castPtr)_Ty;
+
+	return castPtr;
+}
