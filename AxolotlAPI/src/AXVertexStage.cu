@@ -1,21 +1,20 @@
 #include<pch.h>
 #include"AXVertexStage.cuh"
+#include"AXDeviceMemoryPool.cuh"
 #include"AXInputAssembler.cuh"
 #include"AXInputLayout.cuh"
 #include"AXBuffer.cuh"
 #include"AXFormat.h"
-
-__device__ std::vector<AX_INPUT_ELEMENT>* gInputStructure;
-__device__ std::vector<AX_INPUT_ELEMENT>* gOutputStructure;
 
 __global__ void KernelVertexProcess_Sample(void* vertices, unsigned int vertexCount, unsigned int vertexStride, void* outPtr, std::vector<AX_INPUT_ELEMENT>* input, std::vector<AX_INPUT_ELEMENT>* output)
 {
 	// do compute based on vertex shader.
 	// output structure must be determined before the vertex stage. (IA stage)
 
+
 	unsigned int vertexOffset = threadIdx.x * vertexStride;
 	void* vertex = (int*)vertices + vertexOffset;
-	
+
 	unsigned int inputCount = input->size();
 
 	std::vector<void*> inputElements(inputCount);
@@ -40,7 +39,8 @@ __global__ void KernelVertexProcess_Sample(void* vertices, unsigned int vertexCo
 		void* offsetElement = (size_t*)outPtr + (*output)[i].Offset;
 
 		unsigned int slotId = (*output)[i].Slot;
-
+		
+		
 	}
 
 
@@ -49,18 +49,26 @@ __global__ void KernelVertexProcess_Sample(void* vertices, unsigned int vertexCo
 	return;
 }
 
-AXVertexStage::AXVertexStage()
+AXVertexStage::AXVertexStage(std::shared_ptr<AXDeviceMemoryPool> memory)
 {
-	cudaMalloc(reinterpret_cast<void**>(&gInputStructure), 4096);
-	cudaMalloc(reinterpret_cast<void**>(&gOutputStructure), 4096);
-
+	mInputElements = memory->Alloc<std::vector<AX_INPUT_ELEMENT>>(4096);
+	mOutputElements = memory->Alloc<std::vector<AX_INPUT_ELEMENT>>(4096);
 	// --------------------------------------------------------
 
-	AX_INPUT_ELEMENT outputElements[] =
+	AX_INPUT_ELEMENT inputStructure[] =
+	{
+		{"POSITION", 0, 0,0, eAXFormat::AX_R32G32B32_FLOAT},
+		{"COLOR", 1, 0, 12, eAXFormat::AX_R32G32B32A32_FLOAT},
+	};
+
+	AX_INPUT_ELEMENT outputStructure[] =
 	{
 		{"SV_Position", 0, 0, 0, eAXFormat::AX_R32G32B32A32_FLOAT },
 	};
-	mOutputElements.push_back(outputElements[0]);
+
+
+	mHostOutputElements.push_back(outputStructure[0]);
+	
 }
 
 AXVertexStage::~AXVertexStage()
@@ -86,9 +94,9 @@ void AXVertexStage::Process(std::shared_ptr<AXInputAssembler> assembler)
 		dim3 block = dim3(32);
 
 		std::vector<AX_INPUT_ELEMENT>* inputElements = &assembler->InputLayout->mElements;
-		std::vector<AX_INPUT_ELEMENT>* outputElements = &mOutputElements;
-		cudaMemcpy(gInputStructure, inputElements, inputElements->size() * sizeof(AX_INPUT_ELEMENT), cudaMemcpyHostToDevice);
-		cudaMemcpy(gOutputStructure, outputElements, outputElements->size() * sizeof(AX_INPUT_ELEMENT), cudaMemcpyHostToDevice);
+		std::vector<AX_INPUT_ELEMENT>* outputElements = &mHostOutputElements;
+		cudaMemcpy(mInputElements, inputElements, inputElements->size() * sizeof(AX_INPUT_ELEMENT), cudaMemcpyHostToDevice);
+		cudaMemcpy(mOutputElements, outputElements, outputElements->size() * sizeof(AX_INPUT_ELEMENT), cudaMemcpyHostToDevice);
 
 		KernelVertexProcess_Sample <<<grid, block>>>(virtualAddr, vertexCount, vertexStride, mVertexOutput, gInputStructure, gOutputStructure);
 		cudaDeviceSynchronize();
