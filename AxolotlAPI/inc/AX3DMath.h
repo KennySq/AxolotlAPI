@@ -4,11 +4,11 @@
 
 struct AXFLOAT2
 {
-	__vectorcall AXFLOAT2(float _x, float _y)
+	__device__ __host__ AXFLOAT2(float _x, float _y)
 		: x(_x), y(_y)
 	{
 	}
-	__vectorcall AXFLOAT2()
+	__device__ __host__ AXFLOAT2()
 		: x(.0f), y(.0f)
 	{
 
@@ -27,12 +27,12 @@ struct AXFLOAT2
 
 struct AXFLOAT3
 {
-	__vectorcall AXFLOAT3(float _x, float _y, float _z)
+	__device__ __host__ AXFLOAT3(float _x, float _y, float _z)
 		: x(_x), y(_y), z(_z)
 	{
 
 	}
-	__vectorcall AXFLOAT3()
+	__device__ __host__ AXFLOAT3()
 		: x(.0f), y(.0f), z(.0f)
 	{
 
@@ -51,12 +51,12 @@ struct AXFLOAT3
 
 struct AXFLOAT4
 {
-	__vectorcall AXFLOAT4(float _x, float _y, float _z, float _w)
+	__device__ __host__ AXFLOAT4(float _x, float _y, float _z, float _w)
 		: x(_x), y(_y), z(_z), w(_w)
 	{
 
 	}
-	__vectorcall AXFLOAT4()
+	__device__ __host__ AXFLOAT4()
 		: x(.0f), y(.0f), z(.0f), w(.0f)
 	{
 
@@ -99,11 +99,11 @@ struct AXFLOAT3X3
 		return AXFLOAT3X3(1, 0, 0, 0, 1, 0, 0, 0, 1);
 	}
 
-	__vectorcall AXFLOAT3X3()
+	__device__ __host__ AXFLOAT3X3()
 	{
 	}
 
-	__vectorcall AXFLOAT3X3(float s0, float s1, float s2, float s3, float s4, float s5, float s6, float s7, float s8)
+	__device__ __host__ AXFLOAT3X3(float s0, float s1, float s2, float s3, float s4, float s5, float s6, float s7, float s8)
 		: _11(s0), _12(s1), _13(s2), _21(s3), _22(s4), _23(s5), _31(s6), _32(s7), _33(s8)
 	{
 
@@ -168,11 +168,11 @@ struct AXFLOAT4X4
 		return AXFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 	}
 
-	__vectorcall AXFLOAT4X4()
+	__device__ __host__ AXFLOAT4X4()
 	{
 
 	}
-	__vectorcall AXFLOAT4X4(float s0, float s1, float s3, float s4, float s5, float s6, float s7, float s8, float s9, float s10, float s11, float s12, float s13, float s14, float s15, float s16)
+	__device__ __host__ AXFLOAT4X4(float s0, float s1, float s3, float s4, float s5, float s6, float s7, float s8, float s9, float s10, float s11, float s12, float s13, float s14, float s15, float s16)
 		: _11(s0), _12(s1), _13(s3), _14(s4), _21(s5), _22(s6), _23(s7), _24(s8), _31(s9), _32(s10), _33(s11), _34(s12), _41(s13), _42(s14), _43(s15), _44(s16)
 	{
 
@@ -193,46 +193,46 @@ struct AXFLOAT4X4
 //---------------------------------------------------------------
 // AXFLOAT2
 
-inline AXFLOAT2 __vectorcall operator+(const AXFLOAT2& v1, const AXFLOAT2& v2)
+inline AXFLOAT2 __device__ __host__ operator+(const AXFLOAT2& v1, const AXFLOAT2& v2)
 {
 	return AXFLOAT2(v1.x + v2.x, v1.y + v2.y);
 }
 
-inline void __vectorcall operator+=(AXFLOAT2& v1, const AXFLOAT2& v2)
+inline void __device__ __host__ operator+=(AXFLOAT2& v1, const AXFLOAT2& v2)
 {
 	v1.x += v2.x;
 	v1.y += v2.y;
 }
 
-inline AXFLOAT2 __vectorcall operator-(const AXFLOAT2& v1, const AXFLOAT2& v2)
+inline AXFLOAT2 __device__ __host__ operator-(const AXFLOAT2& v1, const AXFLOAT2& v2)
 {
 	return AXFLOAT2(v1.x - v2.x, v1.y - v2.y);
 }
 
-inline void __vectorcall operator-=(AXFLOAT2& v1, const AXFLOAT2& v2)
+inline void __device__ __host__ operator-=(AXFLOAT2& v1, const AXFLOAT2& v2)
 {
 	v1.x -= v2.x;
 	v1.y -= v2.y;
 }
 
 
-inline AXFLOAT2 __vectorcall operator*(const AXFLOAT2& v1, float s)
+inline AXFLOAT2 __device__ __host__ operator*(const AXFLOAT2& v1, float s)
 {
 	return AXFLOAT2(v1.x * s, v1.y * s);
 }
 
-inline void __vectorcall operator*=(AXFLOAT2& v, float s)
+inline void __device__ __host__ operator*=(AXFLOAT2& v, float s)
 {
 	v.x *= s;
 	v.y *= s;
 }
 
-inline AXFLOAT2 __vectorcall operator/(const AXFLOAT2& v1, float s)
+inline AXFLOAT2 __device__ __host__ operator/(const AXFLOAT2& v1, float s)
 {
 	return AXFLOAT2(v1.x / s, v1.y / s);
 }
 
-inline void __vectorcall operator/=(AXFLOAT2& v, float s)
+inline void __device__ __host__ operator/=(AXFLOAT2& v, float s)
 {
 	v.x /= s;
 	v.y /= s;
@@ -241,48 +241,48 @@ inline void __vectorcall operator/=(AXFLOAT2& v, float s)
 //---------------------------------------------------------------
 // AXFLOAT3
 
-inline AXFLOAT3 __vectorcall operator+(const AXFLOAT3& v1, const AXFLOAT3& v2)
+inline AXFLOAT3 __device__ __host__ operator+(const AXFLOAT3& v1, const AXFLOAT3& v2)
 {
 	return AXFLOAT3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
 }
 
-inline void __vectorcall operator+=(AXFLOAT3& v1, const AXFLOAT3& v2)
+inline void __device__ __host__ operator+=(AXFLOAT3& v1, const AXFLOAT3& v2)
 {
 	v1.x += v2.x;
 	v1.y += v2.y;
 	v1.z += v2.z;
 }
 
-inline AXFLOAT3 __vectorcall operator-(const AXFLOAT3& v1, const AXFLOAT3& v2)
+inline AXFLOAT3 __device__ __host__ operator-(const AXFLOAT3& v1, const AXFLOAT3& v2)
 {
 	return AXFLOAT3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
 }
 
-inline void __vectorcall operator-=(AXFLOAT3& v1, const AXFLOAT3& v2)
+inline void __device__ __host__ operator-=(AXFLOAT3& v1, const AXFLOAT3& v2)
 {
 	v1.x -= v2.x;
 	v1.y -= v2.y;
 	v1.z -= v2.z;
 }
 
-inline AXFLOAT3 __vectorcall operator*(const AXFLOAT3& v, float s)
+inline AXFLOAT3 __device__ __host__ operator*(const AXFLOAT3& v, float s)
 {
 	return AXFLOAT3(v.x * s, v.y * s, v.z * s);
 }
 
-inline void __vectorcall operator*=(AXFLOAT3& v, float s)
+inline void __device__ __host__ operator*=(AXFLOAT3& v, float s)
 {
 	v.x *= s;
 	v.y *= s;
 	v.z *= s;
 }
 
-inline AXFLOAT3 __vectorcall operator/(const AXFLOAT3& v1, float s)
+inline AXFLOAT3 __device__ __host__ operator/(const AXFLOAT3& v1, float s)
 {
 	return AXFLOAT3(v1.x / s, v1.y / s, v1.z / s);
 }
 
-inline void __vectorcall operator/=(AXFLOAT3& v, float s)
+inline void __device__ __host__ operator/=(AXFLOAT3& v, float s)
 {
 	v.x /= s;
 	v.y /= s;
@@ -292,12 +292,12 @@ inline void __vectorcall operator/=(AXFLOAT3& v, float s)
 //---------------------------------------------------------------
 // AXFLOAT4
 
-inline AXFLOAT4 __vectorcall operator+(const AXFLOAT4& v1, const AXFLOAT4& v2)
+inline AXFLOAT4 __device__ __host__ operator+(const AXFLOAT4& v1, const AXFLOAT4& v2)
 {
 	return AXFLOAT4(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, v1.w + v2.w);
 }
 
-inline void __vectorcall operator+=(AXFLOAT4& v1, const AXFLOAT4& v2)
+inline void __device__ __host__ operator+=(AXFLOAT4& v1, const AXFLOAT4& v2)
 {
 	v1.x += v2.x;
 	v1.y += v2.y;
@@ -305,12 +305,12 @@ inline void __vectorcall operator+=(AXFLOAT4& v1, const AXFLOAT4& v2)
 	v1.w += v2.w;
 }
 
-inline AXFLOAT4 __vectorcall operator-(const AXFLOAT4& v1, const AXFLOAT4& v2)
+inline AXFLOAT4 __device__ __host__ operator-(const AXFLOAT4& v1, const AXFLOAT4& v2)
 {
 	return AXFLOAT4(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, v1.w - v2.w);
 }
 
-inline void __vectorcall operator-=(AXFLOAT4& v1, const AXFLOAT4& v2)
+inline void __device__ __host__ operator-=(AXFLOAT4& v1, const AXFLOAT4& v2)
 {
 	v1.x -= v2.x;
 	v1.y -= v2.y;
@@ -318,12 +318,12 @@ inline void __vectorcall operator-=(AXFLOAT4& v1, const AXFLOAT4& v2)
 	v1.w -= v2.w;
 }
 
-inline AXFLOAT4 __vectorcall operator*(const AXFLOAT4& v, float s)
+inline AXFLOAT4 __device__ __host__ operator*(const AXFLOAT4& v, float s)
 {
 	return AXFLOAT4(v.x * s, v.y * s, v.z * s, v.w * s);
 }
 
-inline void __vectorcall operator*=(AXFLOAT4& v, float s)
+inline void __device__ __host__ operator*=(AXFLOAT4& v, float s)
 {
 	v.x *= s;
 	v.y *= s;
@@ -331,12 +331,12 @@ inline void __vectorcall operator*=(AXFLOAT4& v, float s)
 	v.w *= s;
 }
 
-inline AXFLOAT4 __vectorcall operator/(const AXFLOAT4& v1, float s)
+inline AXFLOAT4 __device__ __host__ operator/(const AXFLOAT4& v1, float s)
 {
 	return AXFLOAT4(v1.x / s, v1.y / s, v1.z / s, v1.w / s);
 }
 
-inline void __vectorcall operator/=(AXFLOAT4& v, float s)
+inline void __device__ __host__ operator/=(AXFLOAT4& v, float s)
 {
 	v.x /= s;
 	v.y /= s;
@@ -347,53 +347,53 @@ inline void __vectorcall operator/=(AXFLOAT4& v, float s)
 //---------------------------------------------------------------
 // other methods
 
-AXFLOAT2 inline __vectorcall AXFloat2Abs(const AXFLOAT2& v)
+AXFLOAT2 inline __device__ __host__ AXFloat2Abs(const AXFLOAT2& v)
 {
 	return AXFLOAT2(abs(v.x), abs(v.y));
 }
 
-AXFLOAT3 inline __vectorcall AXFloat3Abs(const AXFLOAT3& v)
+AXFLOAT3 inline __device__ __host__ AXFloat3Abs(const AXFLOAT3& v)
 {
 	return AXFLOAT3(abs(v.x), abs(v.y), abs(v.z));
 }
 
-AXFLOAT4 inline __vectorcall AXFloat4Abs(const AXFLOAT4& v)
+AXFLOAT4 inline __device__ __host__ AXFloat4Abs(const AXFLOAT4& v)
 {
 	return AXFLOAT4(abs(v.x), abs(v.y), abs(v.z), abs(v.w));
 }
 
-float inline __vectorcall AXFloat2Length(const AXFLOAT2& v)
+float inline __device__ __host__ AXFloat2Length(const AXFLOAT2& v)
 {
 	return sqrt(v.x * v.x + v.y * v.y);
 }
 
-float inline __vectorcall AXFloat3Length(const AXFLOAT3& v)
+float inline __device__ __host__ AXFloat3Length(const AXFLOAT3& v)
 {
 	return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
-float inline __vectorcall AXFloat4Length(const AXFLOAT4& v)
+float inline __device__ __host__ AXFloat4Length(const AXFLOAT4& v)
 {
 	return sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
 }
 
-float inline __vectorcall AXFloat2Dot(const AXFLOAT2& v1, const AXFLOAT2& v2)
+float inline __device__ __host__ AXFloat2Dot(const AXFLOAT2& v1, const AXFLOAT2& v2)
 {
 	return v1.x * v2.x + v1.y * v2.y;
 }
-float inline __vectorcall AXFloat3Dot(const AXFLOAT3& v1, const AXFLOAT3& v2)
+float inline __device__ __host__ AXFloat3Dot(const AXFLOAT3& v1, const AXFLOAT3& v2)
 {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
 
-float inline __vectorcall AXFloat4Dot(const AXFLOAT4& v1, const AXFLOAT4& v2)
+float inline __device__ __host__ AXFloat4Dot(const AXFLOAT4& v1, const AXFLOAT4& v2)
 {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w;
 }
 
-AXFLOAT3 inline __vectorcall AXFloat3Cross(const AXFLOAT3& v1, const AXFLOAT3& v2)
+AXFLOAT3 inline __device__ __host__ AXFloat3Cross(const AXFLOAT3& v1, const AXFLOAT3& v2)
 {
-	static AXFLOAT3 right = AXFLOAT3(1, 0, 0), up = AXFLOAT3(0, 1, 0), forward = AXFLOAT3(0, 0, 1);
+	AXFLOAT3 right = AXFLOAT3(1, 0, 0), up = AXFLOAT3(0, 1, 0), forward = AXFLOAT3(0, 0, 1);
 
 	AXFLOAT3 s0 = right * (v1.y * v2.z - v1.z * v2.y); 
 	AXFLOAT3 s1 = up * (v1.x * v2.z - v1.z * v2.x);
@@ -402,9 +402,9 @@ AXFLOAT3 inline __vectorcall AXFloat3Cross(const AXFLOAT3& v1, const AXFLOAT3& v
 	return s0 + s1 + s3;
 }
 
-AXFLOAT2 inline __vectorcall AXFloat2Cross(const AXFLOAT2& v1, const AXFLOAT2& v2)
+AXFLOAT2 inline __device__ __host__ AXFloat2Cross(const AXFLOAT2& v1, const AXFLOAT2& v2)
 {
-	static AXFLOAT2 right = AXFLOAT2(1, 0);
+	AXFLOAT2 right = AXFLOAT2(1, 0);
 	
 	AXFLOAT2 s0 = right * (v1.y * v2.x - v1.x * v2.y);
 
@@ -414,12 +414,12 @@ AXFLOAT2 inline __vectorcall AXFloat2Cross(const AXFLOAT2& v1, const AXFLOAT2& v
 // -----------------------------------------------------------------
 // Matrix 4x4
 
-float inline __vectorcall AXFloat2x2Determinant(const __AXFLOAT2X2PRV& m)
+float inline __device__ __host__ AXFloat2x2Determinant(const __AXFLOAT2X2PRV& m)
 {
 	return m._11 * m._22 - m._12 * m._21;
 }
 
-float inline __vectorcall AXFloat3x3Determinant(const AXFLOAT3X3& m)
+float inline __device__ __host__ AXFloat3x3Determinant(const AXFLOAT3X3& m)
 {
 	__AXFLOAT2X2PRV a = __AXFLOAT2X2PRV(m._22, m._23, m._32, m._33);
 	__AXFLOAT2X2PRV b = __AXFLOAT2X2PRV(m._21, m._23, m._31, m._33);
@@ -432,7 +432,7 @@ float inline __vectorcall AXFloat3x3Determinant(const AXFLOAT3X3& m)
 	return s0 - s1 + s2;
 }
 
-float inline __vectorcall AXFloat4x4Determinant(const AXFLOAT4X4& m)
+float inline __device__ __host__ AXFloat4x4Determinant(const AXFLOAT4X4& m)
 {
 	AXFLOAT3X3 a = AXFLOAT3X3(m._22, m._23, m._24, m._32, m._33, m._34, m._42, m._43, m._44);
 	AXFLOAT3X3 b = AXFLOAT3X3(m._12, m._13, m._14, m._32, m._33, m._34, m._42, m._43, m._44);
@@ -447,7 +447,7 @@ float inline __vectorcall AXFloat4x4Determinant(const AXFLOAT4X4& m)
 	return s0 - s1 + s2 - s3;
 }
 
-AXFLOAT4X4 inline __vectorcall AXFloat4x4Multiply(const AXFLOAT4X4& m1, const AXFLOAT4X4& m2)
+AXFLOAT4X4 inline __device__ __host__ AXFloat4x4Multiply(const AXFLOAT4X4& m1, const AXFLOAT4X4& m2)
 {
 	AXFLOAT4X4 mat;
 
@@ -474,27 +474,27 @@ AXFLOAT4X4 inline __vectorcall AXFloat4x4Multiply(const AXFLOAT4X4& m1, const AX
 	return mat;
 }
 
-AXFLOAT4X4 inline __vectorcall AXFloat4x4Translate(const AXFLOAT3& translate)
+AXFLOAT4X4 inline __device__ __host__ AXFloat4x4Translate(const AXFLOAT3& translate)
 {
 	return AXFLOAT4X4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, translate.x, translate.y, translate.z, 1);
 }
 
-AXFLOAT4X4 inline __vectorcall AXFloat4x4Scale(const AXFLOAT3& scale)
+AXFLOAT4X4 inline __device__ __host__ AXFloat4x4Scale(const AXFLOAT3& scale)
 {
 	return AXFLOAT4X4(scale.x, 0, 0, 0, 0, scale.y, 0, 0, 0, 0, scale.z, 0, 0, 0, 0, 1);
 }
 
-AXFLOAT4X4 inline __vectorcall AXFloat4x4RotationX(float theta)
+AXFLOAT4X4 inline __device__ __host__ AXFloat4x4RotationX(float theta)
 {
 	return AXFLOAT4X4(1, 0, 0, 0, 0, cos(theta), sin(theta), 0, 0, -sin(theta), cos(theta), 0, 0, 0, 0, 1);
 }
 
-AXFLOAT4X4 inline __vectorcall AXFloat4x4RotationY(float theta)
+AXFLOAT4X4 inline __device__ __host__ AXFloat4x4RotationY(float theta)
 {
 	return AXFLOAT4X4(cos(theta), 0, -sin(theta), 0, 0, 1, 0, 0, sin(theta), 0, cos(theta), 0, 0, 0, 0, 1);
 }
 
-AXFLOAT4X4 inline __vectorcall AXFloat4x4RotationZ(float theta)
+AXFLOAT4X4 inline __device__ __host__ AXFloat4x4RotationZ(float theta)
 {
 	return AXFLOAT4X4(cos(theta), -sin(theta), 0, 0, sin(theta), cos(theta), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
