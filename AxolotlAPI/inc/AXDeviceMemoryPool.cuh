@@ -26,24 +26,6 @@ public:
 	~AXDeviceMemoryPool();
 
 	void* Alloc(unsigned int size);
-
-	template<typename _Ty>
-	_Ty* Alloc(unsigned int size)
-	{
-		_Ty* ptr = reinterpret_cast<_Ty*>((size_t)(mRaw)+mOffset);
-
-		ptr = new(*ptr)_Ty;
-
-		std::shared_ptr<AXDeviceMemoryAllocator> ma = std::make_shared<AXDeviceMemoryAllocator>(gPoolRaw, size, mOffset);
-
-		mBlock.insert_or_assign(reinterpret_cast<void*>(ptr), ma);
-
-		mOffset += size;
-
-		return ptr;
-	}
-
-
 	void* GetRaw() const
 	{
 		return mRaw;
