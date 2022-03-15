@@ -2,7 +2,6 @@
 #include<pch.h>
 #include<fstream>
 #include"AXUtil.h"
-#include"AXBytecode.h"
 
 static bool AXCompileFromFile(const char* path, const char* target, const char* entry, unsigned int flag, std::shared_ptr<AXBytecode> pOutBytecode)
 {
@@ -68,7 +67,5 @@ static bool AXCompileFromFile(const char* path, const char* target, const char* 
 	file.read((char*)binaryPtr, binarySize);
 	file.close();
 	
-	pOutBytecode = std::make_shared<AXBytecode>(binaryPtr, binarySize);
-
 	return result;
 }
