@@ -81,15 +81,9 @@
     <ClInclude Include="inc\AXDeviceUtil.cuh">
       <Filter>헤더 파일\private</Filter>
     </ClInclude>
-    <ClInclude Include="inc\AXInputAssembler.cuh" />
-    <ClInclude Include="inc\AXPixelStage.cuh" />
-    <ClInclude Include="inc\AXVertexStage.cuh">
-      <Filter>헤더 파일\private</Filter>
-    </ClInclude>
     <ClInclude Include="inc\AXRasterizer.cuh">
       <Filter>헤더 파일\private</Filter>
     </ClInclude>
-    <ClInclude Include="inc\AXOutputMerger.cuh" />
     <ClInclude Include="inc\AXInputLayout.cuh">
       <Filter>헤더 파일\public</Filter>
     </ClInclude>
@@ -99,19 +93,12 @@
     <ClInclude Include="inc\AXShaderCompiler.h">
       <Filter>헤더 파일\public</Filter>
     </ClInclude>
-    <ClInclude Include="inc\AXBytecode.h">
-      <Filter>헤더 파일\public</Filter>
-    </ClInclude>
     <ClInclude Include="inc\AXShader.h">
       <Filter>소스 파일\private</Filter>
     </ClInclude>
-    <ClInclude Include="inc\AXVertexShader.cuh" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AXBytecode.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\AXShader.cpp">
@@ -149,22 +136,11 @@
     <CudaCompile Include="src\AXBuffer.cu">
       <Filter>소스 파일\public</Filter>
     </CudaCompile>
-    <CudaCompile Include="src\AXPixelStage.cu">
-      <Filter>소스 파일\private</Filter>
-    </CudaCompile>
-    <CudaCompile Include="src\AXInputAssembler.cu">
-      <Filter>소스 파일\private</Filter>
-    </CudaCompile>
-    <CudaCompile Include="src\AXVertexStage.cu">
-      <Filter>소스 파일\private</Filter>
-    </CudaCompile>
     <CudaCompile Include="src\AXRasterizer.cu">
       <Filter>소스 파일\private</Filter>
     </CudaCompile>
-    <CudaCompile Include="src\AXOutputMerger.cu" />
     <CudaCompile Include="src\AXInputLayout.cu">
       <Filter>소스 파일\public</Filter>
     </CudaCompile>
-    <CudaCompile Include="src\AXVertexShader.cu" />
   </ItemGroup>
 </Project>

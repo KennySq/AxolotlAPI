@@ -160,26 +160,20 @@
   <ItemGroup>
     <ClInclude Include="inc\AX3DMath.h" />
     <ClInclude Include="inc\AXBuffer.cuh" />
-    <ClInclude Include="inc\AXBytecode.h" />
     <ClInclude Include="inc\AXChain.cuh" />
     <ClInclude Include="inc\AXDeviceMemoryPool.cuh" />
     <ClInclude Include="inc\AXDeviceTexture2D.cuh" />
     <ClInclude Include="inc\AXDeviceUtil.cuh" />
     <ClInclude Include="inc\AXFormat.h" />
-    <ClInclude Include="inc\AXInputAssembler.cuh" />
     <ClInclude Include="inc\AXInputLayout.cuh" />
     <ClInclude Include="inc\Axolotl.h" />
     <ClInclude Include="inc\AXContext.h" />
     <ClInclude Include="inc\AXDevice.cuh" />
-    <ClInclude Include="inc\AXOutputMerger.cuh" />
-    <ClInclude Include="inc\AXPixelStage.cuh" />
     <ClInclude Include="inc\AXRasterizer.cuh" />
     <ClInclude Include="inc\AXRenderTargetView.cuh" />
     <ClInclude Include="inc\AXShader.h" />
     <ClInclude Include="inc\AXShaderCompiler.h" />
     <ClInclude Include="inc\AXUtil.h" />
-    <ClInclude Include="inc\AXVertexShader.cuh" />
-    <ClInclude Include="inc\AXVertexStage.cuh" />
     <ClInclude Include="inc\Command.h" />
     <ClInclude Include="inc\AXCommandList.h" />
     <ClInclude Include="inc\framework.h" />
@@ -196,10 +190,7 @@
     <CudaCompile Include="src\AXDevice.cu" />
     <CudaCompile Include="src\AXDeviceMemoryPool.cu" />
     <CudaCompile Include="src\AXDeviceTexture2D.cu" />
-    <CudaCompile Include="src\AXInputAssembler.cu" />
     <CudaCompile Include="src\AXInputLayout.cu" />
-    <CudaCompile Include="src\AXOutputMerger.cu" />
-    <CudaCompile Include="src\AXPixelStage.cu" />
     <CudaCompile Include="src\AXRasterizer.cu" />
     <CudaCompile Include="src\AXRenderTargetView.cu">
       <FileType>Document</FileType>
@@ -207,15 +198,10 @@
     <CudaCompile Include="src\AXContext.cu">
       <FileType>Document</FileType>
     </CudaCompile>
-    <CudaCompile Include="src\AXVertexShader.cu" />
     <CudaCompile Include="src\Command.cu">
       <FileType>Document</FileType>
     </CudaCompile>
     <CudaCompile Include="src\AXCommandList.cpp">
-      <FileType>Document</FileType>
-    </CudaCompile>
-    <ClCompile Include="src\AXBytecode.cpp" />
-    <CudaCompile Include="src\AXVertexStage.cu">
       <FileType>Document</FileType>
     </CudaCompile>
     <ClCompile Include="src\AXShader.cpp" />
