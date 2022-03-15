@@ -145,7 +145,7 @@ bool AXShader::bindInsturction(const AXShaderInstruction& instruction)
 {
 	if (instruction.Opcode == "dcl_input")
 	{
-			
+		
 	}
 
 	return true;

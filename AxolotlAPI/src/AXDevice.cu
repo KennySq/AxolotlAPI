@@ -8,11 +8,6 @@
 #include"AXBuffer.cuh"
 #include"AXInputLayout.cuh"
 
-#include"AXVertexShader.cuh"
-
-#include"AXBytecode.h"
-
-
 #include"IAXResource.h"
 
 #include<Windows.h>

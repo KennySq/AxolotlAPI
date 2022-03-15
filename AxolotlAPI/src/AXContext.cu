@@ -4,10 +4,7 @@
 #include"AXCommandList.h"
 #include"Command.h"
 
-#include"AXInputAssembler.cuh"
 #include"AXRasterizer.cuh"
-#include"AXOutputMerger.cuh"
-#include"AXPixelStage.cuh"
 
 #include"AX3DMath.h"
 
@@ -34,51 +31,51 @@ __global__ void KernelClearRenderTarget(void* ptr, unsigned int width, unsigned 
 	asPixel[index] = deviceConvertRGB(r, g, b, a);
 }
 
-void AXContext::IASetVertexBuffer(std::shared_ptr<AXBuffer>* const buffer, unsigned int count, unsigned int* const strides, unsigned int* const offsets)
-{
-	assert(strides != nullptr && "strides cannot be null.");
+//void AXContext::IASetVertexBuffer(std::shared_ptr<AXBuffer>* const buffer, unsigned int count, unsigned int* const strides, unsigned int* const offsets)
+//{
+//	assert(strides != nullptr && "strides cannot be null.");
+//
+//	for (unsigned int i = 0; i < count; i++)
+//	{
+//		AX_BIND_FLAG bindFlag = buffer[i]->mBindFlags;
+//		
+//		if ((bindFlag & AX_BIND_VERTEX_BUFFER) != 1)
+//		{
+//			Log("This buffer cannot be bound on IA stage.");
+//		}
+//
+//		mAssembler->VertexBuffers.push_back(buffer[i]);
+//		mAssembler->VertexStrides.push_back(strides[i]);
+//	}
+//}
 
-	for (unsigned int i = 0; i < count; i++)
-	{
-		AX_BIND_FLAG bindFlag = buffer[i]->mBindFlags;
-		
-		if ((bindFlag & AX_BIND_VERTEX_BUFFER) != 1)
-		{
-			Log("This buffer cannot be bound on IA stage.");
-		}
+//void AXContext::IASetIndexBuffer(std::shared_ptr<AXBuffer> buffer)
+//{
+//	if (buffer == nullptr)
+//	{
+//		Log("Invalid argument");
+//	}
+//
+//	AX_BIND_FLAG bindFlag = buffer->mBindFlags;
+//	if ((bindFlag & AX_BIND_INDEX_BUFFER) != 1)
+//	{
+//		Log("This buffer cannot be bound on IA stage.");
+//	}
+//
+//	mAssembler->IndexBuffer = buffer;
+//
+//
+//}
 
-		mAssembler->VertexBuffers.push_back(buffer[i]);
-		mAssembler->VertexStrides.push_back(strides[i]);
-	}
-}
-
-void AXContext::IASetIndexBuffer(std::shared_ptr<AXBuffer> buffer)
-{
-	if (buffer == nullptr)
-	{
-		Log("Invalid argument");
-	}
-
-	AX_BIND_FLAG bindFlag = buffer->mBindFlags;
-	if ((bindFlag & AX_BIND_INDEX_BUFFER) != 1)
-	{
-		Log("This buffer cannot be bound on IA stage.");
-	}
-
-	mAssembler->IndexBuffer = buffer;
-
-
-}
-
-void AXContext::DrawIndexed(unsigned int indexCount, unsigned int offset)
-{
-	std::shared_ptr<AXRenderTargetView> rtv = mOutputStage->GetRenderTargetView(0);
-	std::shared_ptr<IAXResource> resource = rtv->mResource;
-	std::shared_ptr<AXTexture2D> asTex2d = std::static_pointer_cast<AXTexture2D>(resource);
-
-	AX_TEXTURE2D_DESC texDesc = asTex2d->GetDesc();
-	unsigned int vertexCount = mAssembler->VertexBuffers[0]->mSize / mAssembler->VertexStrides[0];
-}
+//void AXContext::DrawIndexed(unsigned int indexCount, unsigned int offset)
+//{
+//	std::shared_ptr<AXRenderTargetView> rtv = mOutputStage->GetRenderTargetView(0);
+//	std::shared_ptr<IAXResource> resource = rtv->mResource;
+//	std::shared_ptr<AXTexture2D> asTex2d = std::static_pointer_cast<AXTexture2D>(resource);
+//
+//	AX_TEXTURE2D_DESC texDesc = asTex2d->GetDesc();
+//	unsigned int vertexCount = mAssembler->VertexBuffers[0]->mSize / mAssembler->VertexStrides[0];
+//}
 
 void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4])
 {
