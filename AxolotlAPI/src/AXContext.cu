@@ -5,7 +5,6 @@
 #include"Command.h"
 
 #include"AXInputAssembler.cuh"
-#include"AXVertexStage.cuh"
 #include"AXRasterizer.cuh"
 #include"AXOutputMerger.cuh"
 #include"AXPixelStage.cuh"
@@ -79,11 +78,6 @@ void AXContext::DrawIndexed(unsigned int indexCount, unsigned int offset)
 
 	AX_TEXTURE2D_DESC texDesc = asTex2d->GetDesc();
 	unsigned int vertexCount = mAssembler->VertexBuffers[0]->mSize / mAssembler->VertexStrides[0];
-
-	mVertexStage->Process(mAssembler);
-	cudaDeviceSynchronize();
-	mRasterStage->Process(resource, texDesc.Width, texDesc.Height, mVertexStage->GetOutput(), vertexCount);
-	cudaDeviceSynchronize();
 }
 
 void AXContext::ClearRenderTarget(std::shared_ptr<AXRenderTargetView> rtv, float clearColor[4])

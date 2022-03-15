@@ -54,7 +54,7 @@ __device__ void deviceDrawLine(void* ptr, AXFLOAT2 p0, AXFLOAT2 p1, unsigned int
 __global__ void KernelDetermineRasterize(void* renderTarget, AXFLOAT2* projectedPoints, unsigned int width)
 {
 	unsigned int blockId = blockIdx.x + blockIdx.y * gridDim.x;
-	unsigned int index = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
+	//unsigned int index = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
 
 	AXFLOAT2 position0 = projectedPoints[threadIdx.x];
 	AXFLOAT2 position1 = projectedPoints[threadIdx.x + 1];
@@ -72,6 +72,6 @@ void AXRasterizer::Process(std::shared_ptr<IAXResource> texture, unsigned int wi
 	// update from here 2021/12/27 11:37 AM
 	dim3 grid = dim3(vertexCount / 3);
 	dim3 block = dim3(32, 1, 1);
-	KernelDetermineRasterize<<<grid, block>>>(texture->mRaw, projectedData, width);
+	KernelDetermineRasterize<<<grid, block>>>(texture->mRaw, reinterpret_cast<AXFLOAT2*>(projectedData), width);
 	
 }

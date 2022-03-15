@@ -159,4 +159,6 @@ std::shared_ptr<AXVertexShader> AXDevice::CreateVertexShader(std::shared_ptr<AXB
 {
 	//SlimShader::BytecodeReader reader = SlimShader::BytecodeReader(bytecode->)
 	//return std::shared_ptr<AXVertexShader>();
+
+	return nullptr;
 }

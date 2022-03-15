@@ -51,8 +51,8 @@ __global__ void KernelVertexProcess_Sample(void* vertices, unsigned int vertexCo
 
 AXVertexStage::AXVertexStage(std::shared_ptr<AXDeviceMemoryPool> memory)
 {
-	mInputElements = memory->Alloc<std::vector<AX_INPUT_ELEMENT>>(4096);
-	mOutputElements = memory->Alloc<std::vector<AX_INPUT_ELEMENT>>(4096);
+	//mInputElements = memory->Alloc<std::vector<AX_INPUT_ELEMENT>>(4096);
+	//mOutputElements = memory->Alloc<std::vector<AX_INPUT_ELEMENT>>(4096);
 	// --------------------------------------------------------
 
 	AX_INPUT_ELEMENT inputStructure[] =

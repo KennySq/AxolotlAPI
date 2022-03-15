@@ -1,5 +1,4 @@
 #pragma once
-#include<pch.h>
 
 struct IAXResource;
 struct AXCommandList;
@@ -9,10 +8,12 @@ struct AXDeviceMemoryPool;
 struct AXBuffer;
 struct AXVertexShader;
 struct AXBytecode;
+struct AXInputLayout;
 
 struct AX_TEXTURE2D_DESC;
 struct AX_RENDER_TARGET_VIEW_DESC;
 struct AX_BUFFER_DESC;
+struct AX_INPUT_ELEMENT;
 
 #define CREATE_AXDEVICE_DEBUG 0xffffffff
 
