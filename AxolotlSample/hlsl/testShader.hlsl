@@ -13,9 +13,5 @@ struct Vertex
 
 float4 vert(Vertex input) : SV_Position
 {
-    float4 world = mul(float4(input.Position, 1.0f), World);
-    float4 view = mul(world, View);
-    float4 projection = mul(view, Projection);
-    
-    return projection;
+    return float4(input.Position, 1.0f);
 }

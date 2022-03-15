@@ -4,6 +4,7 @@
 
 #include "Sample.h"
 #include"inc/Vertex.h"
+#include<AXShader.h>
 
 SampleApp::SampleApp(HWND hWnd)
 {
@@ -34,6 +35,12 @@ SampleApp::SampleApp(HWND hWnd)
 	ibDesc.BindFlags = AX_BIND_INDEX_BUFFER;
 	ibDesc.ByteSize = sizeof(unsigned int) * 3;
 
+	AX_INPUT_ELEMENT inputElements[] =
+	{
+		{"POSITION", 0, 0, AX_R32G32B32_FLOAT},
+		{"COLOR", 1, 0, AX_R32G32B32A32_FLOAT},
+	};
+
 	rtvDesc.Dimension = AX_RTV_DIMENSION_TEXTURE2D;
 
 	mTexture = mDevice->CreateTexture2D(texDesc);
@@ -58,7 +65,9 @@ SampleApp::SampleApp(HWND hWnd)
 
 	std::shared_ptr<AXBytecode> mVertexBlob, mPixelBlob;
 
-	bool compileResult = AXCompileFromFile("C:/Users/odess/Desktop/Projects/Axolotl/AxolotlSample/hlsl/testShader.hlsl", "vs_5_0", "vert", 0, &mVertexBlob);
+	//bool compileResult = AXCompileFromFile("C:/Users/odess/Desktop/Projects/Axolotl/AxolotlSample/hlsl/testShader.hlsl", "vs_5_0", "vert", 0, mVertexBlob);
+	AXShader::AXCompile("C:/Users/odess/Desktop/Projects/Axolotl/AxolotlSample/hlsl/testShader.hlsl", "vs_5_0", "vert", 0);
+	
 
 	return;
 
