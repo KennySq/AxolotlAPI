@@ -172,6 +172,7 @@
     <ClInclude Include="inc\AXRasterizer.cuh" />
     <ClInclude Include="inc\AXRenderTargetView.cuh" />
     <ClInclude Include="inc\AXShader.h" />
+    <ClInclude Include="inc\AXShaderStream.h" />
     <ClInclude Include="inc\AXUtil.h" />
     <ClInclude Include="inc\Command.h" />
     <ClInclude Include="inc\AXCommandList.h" />
@@ -204,6 +205,7 @@
       <FileType>Document</FileType>
     </CudaCompile>
     <ClCompile Include="src\AXShader.cpp" />
+    <ClCompile Include="src\AXShaderStream.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
