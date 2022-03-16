@@ -181,8 +181,10 @@
     <ClInclude Include="inc\IAXResource.h" />
     <ClInclude Include="inc\pch.h" />
     <ClInclude Include="inc\AXTexture.h" />
+    <ClInclude Include="inc\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Singleton.cpp" />
     <CudaCompile Include="src\AXBuffer.cu" />
     <CudaCompile Include="src\AXChain.cu">
       <FileType>Document</FileType>
