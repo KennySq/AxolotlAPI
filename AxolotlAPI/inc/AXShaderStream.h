@@ -1,6 +1,7 @@
 #pragma once
 #include<AX3DMath.h>
-struct AXShaderStream
+#include<Singleton.h>
+struct AXShaderStream : Singleton<AXShaderStream>
 {
 public:
 	AXShaderStream();

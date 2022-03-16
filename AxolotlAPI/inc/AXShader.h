@@ -1,5 +1,6 @@
 #pragma once
 #include<sstream>
+#include<AX3DMath.h>
 
 enum eShaderType
 {
@@ -17,16 +18,39 @@ public:
 	static std::shared_ptr<AXShader> AXCompile(const char* path, const char* target, const char* entry, unsigned int flag);
 
 private:
-	struct AXShaderInstruction
+	struct AXBaseInstruction
 	{
-		std::function<void()> Instruction;
-
 		std::string Opcode;
 		std::vector<std::string> Operands;
 	};
 
+	template<typename _Fx>
+	struct AXShaderInstruction : public AXBaseInstruction
+	{
+		AXShaderInstruction(const AXBaseInstruction& inst)
+			: AXBaseInstruction(inst)
+		{
+
+		}
+		std::function<_Fx> Instruction;
+	};
+
 	static bool parseShader(const std::shared_ptr<AXShader>& shader);
-	static bool bindInsturction(const AXShaderInstruction& instruction);
+	template<typename _Fx, typename... _Args>
+	static void bindInsturction(AXShaderInstruction<_Fx>* instruction, _Fx& func, _Args... args)
+	{
+		instruction->Instruction = std::bind<_Fx>(args);
+	}
+	template<typename _Fx>
+	static void bindInsturction(AXShaderInstruction<_Fx>* instruction, _Fx& func)
+	{
+		instruction->Instruction = std::bind<void()>(func);
+	}
+
+	static AXFLOAT4 swizzle(const AXFLOAT4& src, const std::string& operand);
+
+	void processInstructions();
+
 
 	std::string mName;
 	std::string mPath;
@@ -37,7 +61,5 @@ private:
 	
 	std::ostringstream mShaderAsm;
 
-	std::vector<AXShaderInstruction> mInstructions;
-
-	
+	std::vector<AXBaseInstruction> mInstructions;
 };

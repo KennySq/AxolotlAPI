@@ -2,9 +2,11 @@
 #include"AXUtil.h"
 #include"AXShader.h"
 
+#include<AXShaderStream.h>
+
 std::shared_ptr<AXShader> AXShader::AXCompile(const char* path, const char* target, const char* entry, unsigned int flag)
 {
-    std::shared_ptr<AXShader> shader = std::make_shared<AXShader>();
+	std::shared_ptr<AXShader> shader = std::make_shared<AXShader>();
 	shader->mPath = path;
 
 	std::string fileStr = path;
@@ -51,7 +53,7 @@ std::shared_ptr<AXShader> AXShader::AXCompile(const char* path, const char* targ
 	std::ifstream file;
 
 	file.open(outPath);
-	
+
 	if (!file)
 	{
 		std::cout << "Failed.\n";
@@ -67,7 +69,7 @@ std::shared_ptr<AXShader> AXShader::AXCompile(const char* path, const char* targ
 		shader->mShaderAsm << buffer;
 		shader->mShaderAsm << '\n';
 	}
-	
+
 	file.close();
 
 	bool bParseResult = parseShader(shader);
@@ -77,16 +79,16 @@ std::shared_ptr<AXShader> AXShader::AXCompile(const char* path, const char* targ
 	}
 	assert(bParseResult == true);
 
-    return shader;
+	return shader;
 }
 
 bool AXShader::parseShader(const std::shared_ptr<AXShader>& shader)
 {
 	std::stringstream shaderAsm = std::stringstream(shader->mShaderAsm.str());
-	
+
 	while (shaderAsm.eof() == false)
 	{
-		AXShaderInstruction instruction;
+		std::shared_ptr<AXBaseInstruction> instruction = std::make_shared<AXBaseInstruction>();
 		char buffer[1024];
 
 		shaderAsm.getline(buffer, 1024);
@@ -99,7 +101,7 @@ bool AXShader::parseShader(const std::shared_ptr<AXShader>& shader)
 		}
 
 		std::string opcode;
-		
+
 		size_t opcodeSpacer = line.find_first_of(' ');
 		if (opcodeSpacer == line.npos)
 		{
@@ -108,7 +110,7 @@ bool AXShader::parseShader(const std::shared_ptr<AXShader>& shader)
 		opcode = line.substr(0, opcodeSpacer);
 		line = line.substr(opcodeSpacer);
 
-		instruction.Opcode = opcode;
+		instruction->Opcode = opcode;
 
 		size_t lineSize = line.size();
 		size_t operandCount = 0;
@@ -120,7 +122,7 @@ bool AXShader::parseShader(const std::shared_ptr<AXShader>& shader)
 			}
 		}
 
-		instruction.Operands.resize(operandCount);
+		instruction->Operands.resize(operandCount);
 
 		for (int i = 0; i < operandCount; i++)
 		{
@@ -132,7 +134,7 @@ bool AXShader::parseShader(const std::shared_ptr<AXShader>& shader)
 				line = line.substr(line.find_last_of(' ') + 1);
 
 			}
-			instruction.Operands[i] = operand;
+			instruction->Operands[i] = operand;
 		}
 
 		shader->mInstructions.emplace_back(instruction);
@@ -141,12 +143,50 @@ bool AXShader::parseShader(const std::shared_ptr<AXShader>& shader)
 	return true;
 }
 
-bool AXShader::bindInsturction(const AXShaderInstruction& instruction)
+AXFLOAT4 AXShader::swizzle(const AXFLOAT4& src, const std::string& operand)
 {
-	if (instruction.Opcode == "dcl_input")
-	{
-		
-	}
+	AXFLOAT4 vector;
 
-	return true;
+	float v[4];
+
+	size_t operandCount = operand.size();
+	size_t componentIndex = operand.find('.' + 1);
+
+	std::string components = operand.substr(componentIndex);
+	size_t componentCount = components.size();
+
+	for (size_t j = 0; j < componentCount; j++)
+	{
+		if (components[j] == 'x')
+		{
+			v[j] = src.x;
+		}
+		else if (components[j] == 'y')
+		{
+			v[j] = src.y;
+		}
+		else if (components[j] == 'z')
+		{
+			v[j] = src.z;
+		}
+		else if (components[j] == 'w')
+		{
+			v[j] = src.w;
+		}
+	}
+	return vector;
+}
+
+void AXShader::processInstructions()
+{
+	size_t instructionCount = mInstructions.size();
+	for (size_t i = 0; i < instructionCount; i++)
+	{
+		if (mInstructions[i].Opcode == "dcl_input")
+		{
+			AXShaderInstruction<void(size_t)> instruction(mInstructions[i]);
+
+			bindInsturction<void(size_t)>(&instruction, AXShaderStream::ResizeInputStream);
+		}
+	}
 }
