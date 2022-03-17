@@ -3,6 +3,7 @@
 #include"AXShader.h"
 
 #include<AXShaderStream.h>
+#include<AXShaderMath.h>
 
 std::shared_ptr<AXShader> AXShader::AXCompile(const char* path, const char* target, const char* entry, unsigned int flag)
 {
@@ -179,23 +180,46 @@ AXFLOAT4 AXShader::swizzle(const AXFLOAT4& src, const std::string& operand)
 	return vector;
 }
 
+
 void AXShader::processInstructions()
 {
 	size_t instructionCount = mInstructions.size();
 	for (size_t i = 0; i < instructionCount; i++)
 	{
-		if (mInstructions[i]->Opcode == "dcl_input")
+		if (mInstructions[i]->Opcode == "dcl_output_siv")
 		{
-			std::shared_ptr<AXShaderInstruction<void(size_t)>> instruction
-				= std::make_shared<AXShaderInstruction<void(size_t)>>(*mInstructions[i]);
+			//std::shared_ptr<AXShaderInstruction<void(size_t, AXFLOAT4)>> instruction
+			//	= std::make_shared<AXShaderInstruction<void(size_t, AXFLOAT4)>>(*mInstructions[i]);
 
-			AXShaderStream* shaderStream = AXShaderStream::GetInstance();
+			//AXShaderStream* shaderStream = AXShaderStream::GetInstance();
 
-			auto ptr = shaderStream->GetInstance()->ResizeInputStream;
+			//auto ptr = shaderStream->;
+			//
+			//const std::string& destionation = mInstructions[i]->Operands[0];
+			//const std::string& systemDescription = mInstructions[i]->Operands[1];
+			//
+			//// v##.xyzw
 
-			const std::string& operand = mInstructions[i]->Operands[0];
-			
-			bindInsturction<void(size_t)>(instruction, ptr, );
+			//if (systemDescription == "position")
+			//{
+			//	// treat as system position
+			//}
+
+			//std::string registerIndexString = destionation.substr(1, destionation.find('.') - 1);
+			//int registerIndex = atoi(registerIndexString.c_str());
+
+			//bindInsturction<void(size_t, AXFLOAT4)>(instruction, ptr);
+		}
+
+		if (mInstructions[i]->Opcode == "dp4")
+		{
+			std::shared_ptr<AXShaderInstruction<float(const AXFLOAT4&, const AXFLOAT4&)>> instruction
+				= std::make_shared<AXShaderInstruction<float(const AXFLOAT4&, const AXFLOAT4&)>>(*mInstructions[i]);
+
+			auto dotFunc = AXShaderMath::GetInstance()->Dot;
+			AXFLOAT4 s;
+
+			bindInsturction<float(const AXFLOAT4&, const AXFLOAT4&)>(instruction, dotFunc, s, s);
 		}
 	}
 }
