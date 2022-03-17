@@ -1,10 +1,12 @@
 #include<pch.h>
 #include<AXShaderStream.h>
 
-AXShaderStream::AXShaderStream()
+template<typename _VertTy>
+AXShaderStream<_VertTy>::AXShaderStream()
 {
 }
 
-AXShaderStream::~AXShaderStream()
+template<typename _VertTy>
+AXShaderStream<_VertTy>::~AXShaderStream()
 {
 }

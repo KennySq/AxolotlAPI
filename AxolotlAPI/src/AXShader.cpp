@@ -79,6 +79,8 @@ std::shared_ptr<AXShader> AXShader::AXCompile(const char* path, const char* targ
 	}
 	assert(bParseResult == true);
 
+	shader->processInstructions();
+
 	return shader;
 }
 
@@ -182,11 +184,18 @@ void AXShader::processInstructions()
 	size_t instructionCount = mInstructions.size();
 	for (size_t i = 0; i < instructionCount; i++)
 	{
-		if (mInstructions[i].Opcode == "dcl_input")
+		if (mInstructions[i]->Opcode == "dcl_input")
 		{
-			AXShaderInstruction<void(size_t)> instruction(mInstructions[i]);
+			std::shared_ptr<AXShaderInstruction<void(size_t)>> instruction
+				= std::make_shared<AXShaderInstruction<void(size_t)>>(*mInstructions[i]);
 
-			bindInsturction<void(size_t)>(&instruction, AXShaderStream::ResizeInputStream);
+			AXShaderStream* shaderStream = AXShaderStream::GetInstance();
+
+			auto ptr = shaderStream->GetInstance()->ResizeInputStream;
+
+			const std::string& operand = mInstructions[i]->Operands[0];
+			
+			bindInsturction<void(size_t)>(instruction, ptr, );
 		}
 	}
 }
