@@ -172,6 +172,7 @@
     <ClInclude Include="inc\AXRasterizer.cuh" />
     <ClInclude Include="inc\AXRenderTargetView.cuh" />
     <ClInclude Include="inc\AXShader.h" />
+    <ClInclude Include="inc\AXShaderMath.h" />
     <ClInclude Include="inc\AXShaderStream.h" />
     <ClInclude Include="inc\AXUtil.h" />
     <ClInclude Include="inc\Command.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="inc\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AXShaderMath.cpp" />
     <ClCompile Include="src\Singleton.cpp" />
     <CudaCompile Include="src\AXBuffer.cu" />
     <CudaCompile Include="src\AXChain.cu">
@@ -217,6 +219,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <FileType>Document</FileType>
     </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
