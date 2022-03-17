@@ -2,19 +2,19 @@
 #include<AX3DMath.h>
 #include<Singleton.h>
 
-template<typename _VertTy>
-struct AXShaderStream : Singleton<AXShaderStream>
+struct AXShaderStream : public Singleton<AXShaderStream>
 {
 public:
 	AXShaderStream();
 	~AXShaderStream();
 
-	static void ResizeInputStream(size_t size) { GetInstance()->mInputStreams.resize(size); }
-	static void ResizeOutputStream(size_t size) { GetInstance()->mOutputStreams.resize(size); }
+	static std::vector<AXFLOAT4>& GetInputRegisters() { return GetInstance()->mInputRegisters; }
+	static std::vector<AXFLOAT4>& GetOutputRegisters() { return GetInstance()->mOutputRegisters; }
+
+	static void SetInputRegisterValue(size_t index, AXFLOAT4 value) { GetInstance()->mInputRegisters[index] = value; }
+	static void SetOutputRegisterValue(size_t index, AXFLOAT4 value) { GetInstance()->mOutputRegisters[index] = value; }
 
 private:
-	std::vector<_VertTy> mInputStreams;
-	std::vector<_VertTy> mOutputStreams;
-
-	AXFLOAT4* mSystemPosition;
+	std::vector<AXFLOAT4> mInputRegisters;
+	std::vector<AXFLOAT4> mOutputRegisters;
 };
