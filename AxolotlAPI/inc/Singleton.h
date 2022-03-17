@@ -20,8 +20,12 @@ public:
 		}
 	}
 
-	static _Ty* GetInstance() const { return mInstance; }
+	static _Ty* const GetInstance() { return mInstance; }
 private:
 	static _Ty* mInstance;
 
 };
+
+
+template<class _Ty>
+_Ty* Singleton<_Ty>::mInstance = nullptr;
