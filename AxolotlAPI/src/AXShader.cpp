@@ -192,7 +192,7 @@ void AXShader::processInstructions()
 			AXShaderAssemblyVector asmVector0 = AsAXShaderAssemblyVector(operand0, mStream);
 			AXShaderAssemblyVector asmVector1 = AsAXShaderAssemblyVector(operand1, mStream);
 			
-			bindInsturction<float(const AXFLOAT4*, const AXFLOAT4*)>(mInstructions[i], dotFunc, asmVector0.Vector, asmVector1.Vector);
+			bindInsturction(mInstructions[i], dotFunc, asmVector0.Vector, asmVector1.Vector);
 		}
 
 		if (mInstructions[i]->Opcode == "mov")
