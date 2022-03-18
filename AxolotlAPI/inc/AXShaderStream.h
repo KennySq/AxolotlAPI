@@ -2,19 +2,22 @@
 #include<AX3DMath.h>
 #include<Singleton.h>
 
-struct AXShaderStream : public Singleton<AXShaderStream>
+struct AXShaderStream
 {
 public:
 	AXShaderStream();
 	~AXShaderStream();
 
-	static std::vector<AXFLOAT4>& GetInputRegisters() { return GetInstance()->mInputRegisters; }
-	static std::vector<AXFLOAT4>& GetOutputRegisters() { return GetInstance()->mOutputRegisters; }
+	AXFLOAT4* GetInputRegister(size_t index) { return &mInputRegisters.data()[index]; }
+	AXFLOAT4* GetOutputRegister(size_t index) { return &mOutputRegisters.data()[index]; }
+	AXFLOAT4* GetTemporalRegister(size_t index) { return &mTemporalRegisters.data()[index]; }
 
-	static void SetInputRegisterValue(size_t index, AXFLOAT4 value) { GetInstance()->mInputRegisters[index] = value; }
-	static void SetOutputRegisterValue(size_t index, AXFLOAT4 value) { GetInstance()->mOutputRegisters[index] = value; }
+	void SetInputRegisterValue(size_t index, AXFLOAT4 value) { mInputRegisters[index] = value; }
+	void SetOutputRegisterValue(size_t index, AXFLOAT4 value) { mOutputRegisters[index] = value; }
+	void SetTemporalRegisterValue(size_t index, AXFLOAT4 value) { mTemporalRegisters[index] = value; }
 
 private:
 	std::vector<AXFLOAT4> mInputRegisters;
+	std::vector<AXFLOAT4> mTemporalRegisters;
 	std::vector<AXFLOAT4> mOutputRegisters;
 };

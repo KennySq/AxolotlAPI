@@ -20,7 +20,7 @@ public:
 		}
 	}
 
-	static _Ty* const GetInstance() const { return mInstance; }
+	static _Ty* const GetInstance() { return mInstance; }
 private:
 	static _Ty* mInstance;
 
