@@ -4,6 +4,7 @@
 
 #include<AXShaderStream.h>
 #include<AXShaderMath.h>
+#include<AXShaderAssembly.h>
 
 std::shared_ptr<AXShader> AXShader::AXCompile(const char* path, const char* target, const char* entry, unsigned int flag)
 {
@@ -85,13 +86,18 @@ std::shared_ptr<AXShader> AXShader::AXCompile(const char* path, const char* targ
 	return shader;
 }
 
+AXShader::AXShader()
+	: mStream(std::make_shared<AXShaderStream>())
+{
+}
+
 bool AXShader::parseShader(const std::shared_ptr<AXShader>& shader)
 {
 	std::stringstream shaderAsm = std::stringstream(shader->mShaderAsm.str());
 
 	while (shaderAsm.eof() == false)
 	{
-		std::shared_ptr<AXBaseInstruction> instruction = std::make_shared<AXBaseInstruction>();
+		std::shared_ptr<AXShaderInstruction> instruction = std::make_shared<AXShaderInstruction>();
 		char buffer[1024];
 
 		shaderAsm.getline(buffer, 1024);
@@ -146,41 +152,6 @@ bool AXShader::parseShader(const std::shared_ptr<AXShader>& shader)
 	return true;
 }
 
-AXFLOAT4 AXShader::swizzle(const AXFLOAT4& src, const std::string& operand)
-{
-	AXFLOAT4 vector;
-
-	float v[4];
-
-	size_t operandCount = operand.size();
-	size_t componentIndex = operand.find('.' + 1);
-
-	std::string components = operand.substr(componentIndex);
-	size_t componentCount = components.size();
-
-	for (size_t j = 0; j < componentCount; j++)
-	{
-		if (components[j] == 'x')
-		{
-			v[j] = src.x;
-		}
-		else if (components[j] == 'y')
-		{
-			v[j] = src.y;
-		}
-		else if (components[j] == 'z')
-		{
-			v[j] = src.z;
-		}
-		else if (components[j] == 'w')
-		{
-			v[j] = src.w;
-		}
-	}
-	return vector;
-}
-
-
 void AXShader::processInstructions()
 {
 	size_t instructionCount = mInstructions.size();
@@ -213,13 +184,40 @@ void AXShader::processInstructions()
 
 		if (mInstructions[i]->Opcode == "dp4")
 		{
-			std::shared_ptr<AXShaderInstruction<float(const AXFLOAT4&, const AXFLOAT4&)>> instruction
-				= std::make_shared<AXShaderInstruction<float(const AXFLOAT4&, const AXFLOAT4&)>>(*mInstructions[i]);
+			auto&& dotFunc = AXShaderDot;
+			
+			const std::string& operand0 = mInstructions[i]->Operands[0];
+			const std::string& operand1 = mInstructions[i]->Operands[1];
+			
+			AXShaderAssemblyVector asmVector0 = AsAXShaderAssemblyVector(operand0, mStream);
+			AXShaderAssemblyVector asmVector1 = AsAXShaderAssemblyVector(operand1, mStream);
+			
+			bindInsturction<float(const AXFLOAT4*, const AXFLOAT4*)>(mInstructions[i], dotFunc, asmVector0.Vector, asmVector1.Vector);
+		}
 
-			auto dotFunc = AXShaderMath::GetInstance()->Dot;
-			AXFLOAT4 s;
+		if (mInstructions[i]->Opcode == "mov")
+		{
+			auto&& movFunc = AXShaderMov;
 
-			bindInsturction<float(const AXFLOAT4&, const AXFLOAT4&)>(instruction, dotFunc, s, s);
+			const std::string& operand0 = mInstructions[i]->Operands[0];
+			const std::string& operand1 = mInstructions[i]->Operands[1];
+
+			AXShaderAssemblyVector asmVector0 = AsAXShaderAssemblyVector(operand0, mStream);
+			AXShaderAssemblyVector asmVector1 = AsAXShaderAssemblyVector(operand1, mStream);
+
+			bindInsturction(mInstructions[i], movFunc, asmVector0.Vector, asmVector1.Vector);
+		}
+	}
+}
+
+void AXShader::runInstructions()
+{
+	size_t instructionCount = mInstructions.size();
+	for (size_t i = 0; i < instructionCount; i++)
+	{
+		if (mInstructions[i]->Instruction != nullptr)
+		{
+			mInstructions[i]->Instruction();
 		}
 	}
 }

@@ -2,6 +2,8 @@
 #include<sstream>
 #include<AX3DMath.h>
 
+struct AXShaderStream;
+
 enum eShaderType
 {
 	SHADER_VERTEX = 1,
@@ -16,51 +18,29 @@ struct AXShader
 {
 public:
 	static std::shared_ptr<AXShader> AXCompile(const char* path, const char* target, const char* entry, unsigned int flag);
+	AXShader();
+
+	void runInstructions();
+
 
 private:
-	struct AXBaseInstruction
+
+	struct AXShaderInstruction
 	{
-		AXBaseInstruction()
-		{
-
-		}
-
-		AXBaseInstruction(const std::string& opcode, const std::vector<std::string>& operands)
-			: Opcode(opcode), Operands(operands)
-		{
-
-		}
+		std::function<void()> Instruction;
 		std::string Opcode;
 		std::vector<std::string> Operands;
 	};
 
-	template<typename _Fx>
-	struct AXShaderInstruction : public AXBaseInstruction
-	{
-		AXShaderInstruction(const AXBaseInstruction& inst)
-			: AXBaseInstruction(inst)
-		{
-
-		}
-		std::function<_Fx> Instruction;
-	};
-
 	static bool parseShader(const std::shared_ptr<AXShader>& shader);
-	template<typename _Fx, typename... _Args>
-	static void bindInsturction(std::shared_ptr<AXShaderInstruction<_Fx>> instruction, _Fx* func, _Args... args)
-	{
-		instruction->Instruction = std::bind<_Fx>(*func, args);
-	}
-	template<typename _Fx>
-	static void bindInsturction(std::shared_ptr<AXShaderInstruction<_Fx>> instruction, _Fx* func)
-	{
-		instruction->Instruction = std::bind<void()>(*func);
-	}
 
-	static AXFLOAT4 swizzle(const AXFLOAT4& src, const std::string& operand);
+	template<typename _Fx, typename... _Args>
+	static void bindInsturction(std::shared_ptr<AXShaderInstruction> instruction, _Fx&& func, _Args&&... args)
+	{
+		instruction->Instruction = std::bind(func, args...);
+	}
 
 	void processInstructions();
-
 
 	std::string mName;
 	std::string mPath;
@@ -71,5 +51,7 @@ private:
 	
 	std::ostringstream mShaderAsm;
 
-	std::vector<std::shared_ptr<AXBaseInstruction>> mInstructions;
+	std::vector<std::shared_ptr<AXShaderInstruction>> mInstructions;
+
+	std::shared_ptr<AXShaderStream> mStream;
 };
