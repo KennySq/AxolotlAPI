@@ -16,8 +16,9 @@ std::shared_ptr<AXShader> AXShader::AXCompile(const char* path, const char* targ
 
 	fileStr = slashIndex == MAXSSIZE_T ? fileStr.substr(fileStr.find_last_of('\\') + 1) : fileStr.substr(slashIndex + 1);
 
-	std::string outPath = fileStr.substr(0, fileStr.find_last_of('.'));
+	std::string outPath = std::string("hlsl/") + fileStr.substr(0, fileStr.find_last_of('.'));
 	outPath += ".o";
+
 	std::string args = std::string(" /T ") + target + " /E " + entry + " /Fc " + outPath;
 
 	std::string exeCmd = std::string("C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x64/fxc ");
@@ -59,6 +60,7 @@ std::shared_ptr<AXShader> AXShader::AXCompile(const char* path, const char* targ
 	if (!file)
 	{
 		std::cout << "Failed.\n";
+		return nullptr;
 	}
 
 	while (file.eof() == false)
@@ -132,17 +134,35 @@ bool AXShader::parseShader(const std::shared_ptr<AXShader>& shader)
 		}
 
 		instruction->Operands.resize(operandCount);
-
+		line = line.substr(line.find_first_of(' ') + 1);
 		for (int i = 0; i < operandCount; i++)
 		{
-			std::string operand = line.substr(line.find_first_of(' ') + 1);
-			size_t nextOperand = operand.find_first_of(',');
+			std::string operand = line.substr(0, line.find_first_of(' '));
+			size_t nextOperand = line.find_first_of(' ');
+
+			bool bComma = (operand.find(',') != operand.npos);
+			
+			if (bComma == true)
+			{
+				operand = operand.substr(0, operand.find(','));
+			}
+
 			if (nextOperand != operand.npos)
 			{
-				operand = operand.substr(0, nextOperand);
-				line = line.substr(line.find_last_of(' ') + 1);
-
+				line = line.substr(line.find_first_of(' ') + 1);
 			}
+
+
+			
+
+			//if (nextOperand != operand.npos)
+			//{
+			//	operand = operand.substr(0, nextOperand);
+
+			//	size_t nextStart = line.find(' ') + 1;
+			//	line = line.substr(nextStart, line.size() - nextStart);
+
+			//}
 			instruction->Operands[i] = operand;
 		}
 
@@ -188,11 +208,13 @@ void AXShader::processInstructions()
 			
 			const std::string& operand0 = mInstructions[i]->Operands[0];
 			const std::string& operand1 = mInstructions[i]->Operands[1];
+			const std::string& operand2 = mInstructions[i]->Operands[2];
 			
-			AXShaderAssemblyVector asmVector0 = AsAXShaderAssemblyVector(operand0, mStream);
-			AXShaderAssemblyVector asmVector1 = AsAXShaderAssemblyVector(operand1, mStream);
+			AXShaderAssemblyVector destination = AsAXShaderAssemblyVector(operand0, mStream);
+			AXShaderAssemblyVector source0 = AsAXShaderAssemblyVector(operand1, mStream);
+			AXShaderAssemblyVector source1 = AsAXShaderAssemblyVector(operand2, mStream);
 			
-			bindInsturction(mInstructions[i], dotFunc, asmVector0.Vector, asmVector1.Vector);
+			bindInsturction(mInstructions[i], dotFunc, destination, source0, source1);
 		}
 
 		if (mInstructions[i]->Opcode == "mov")

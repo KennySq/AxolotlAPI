@@ -4,17 +4,18 @@
 
 struct AXShaderAssemblyVector
 {
-	AXShaderAssemblyVector()
-		: Index(-1), Vector(nullptr)
+	AXShaderAssemblyVector(const std::string& operand)
+		: Index(-1), Vector(nullptr), Operand(operand)
 	{
 
 	}
-	AXShaderAssemblyVector(size_t index, AXFLOAT4* v)
-		: Index(index), Vector(v)
+	AXShaderAssemblyVector(size_t index, AXFLOAT4* v, const std::string& operand)
+		: Index(index), Vector(v), Operand(operand)
 	{
 
 	}
 
+	const std::string& Operand;
 	size_t Index;
 	AXFLOAT4* Vector;
 };
@@ -73,7 +74,7 @@ static __host__ __device__  AXShaderAssemblyVector AsAXShaderAssemblyVector(cons
 		registerPtr = stream->GetTemporalRegister(index);
 	}
 
-	return AXShaderAssemblyVector(index, registerPtr);
+	return AXShaderAssemblyVector(index, registerPtr, operand);
 }
 
 static __host__ __device__ void AXShaderMov(AXFLOAT4* v0, AXFLOAT4* v1)
