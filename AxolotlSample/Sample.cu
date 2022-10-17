@@ -1,6 +1,5 @@
 #include<Axolotl.h>
 #include<AX3DMath.h>
-#include<AXShaderCompiler.h>
 
 #include "Sample.h"
 #include"inc/Vertex.h"
@@ -66,11 +65,9 @@ SampleApp::SampleApp(HWND hWnd)
 	std::shared_ptr<AXBytecode> mVertexBlob, mPixelBlob;
 
 	//bool compileResult = AXCompileFromFile("C:/Users/odess/Desktop/Projects/Axolotl/AxolotlSample/hlsl/testShader.hlsl", "vs_5_0", "vert", 0, mVertexBlob);
-	AXShader::AXCompile("C:/Users/odess/Desktop/Projects/Axolotl/AxolotlSample/hlsl/testShader.hlsl", "vs_5_0", "vert", 0);
+	mPixelShader = AXCompile<AXPixelShader>("C:/Users/odess/Desktop/Projects/Axolotl/AxolotlSample/hlsl/testShader.hlsl", "vs_5_0", "vert", 0);
 	
-
 	return;
-
 }
 
 SampleApp::~SampleApp()

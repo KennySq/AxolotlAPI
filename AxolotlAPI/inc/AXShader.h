@@ -1,6 +1,7 @@
 #pragma once
 #include<sstream>
 #include<AX3DMath.h>
+#include<AXUtil.h>
 
 struct AXShaderStream;
 
@@ -17,11 +18,15 @@ enum eShaderType
 struct AXShader
 {
 public:
-	static std::shared_ptr<AXShader> AXCompile(const char* path, const char* target, const char* entry, unsigned int flag);
+	template<class _Ty>
+	friend std::shared_ptr<_Ty> AXCompile(const char* path, const char* target, const char* entry, unsigned int flag);
+
+	virtual void Execute() = 0;
+
+protected:
 	AXShader();
-
+	virtual ~AXShader();
 	void runInstructions();
-
 
 private:
 

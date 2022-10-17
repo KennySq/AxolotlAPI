@@ -51,7 +51,6 @@ void swizzle(AXFLOAT4* dest, const AXFLOAT4& src, const std::string& operand)
 	return;
 }
 
-
 static __host__ __device__  AXShaderAssemblyVector AsAXShaderAssemblyVector(const std::string& operand, const std::shared_ptr<AXShaderStream>& stream)
 {
 	// v#.xxxx
@@ -59,7 +58,7 @@ static __host__ __device__  AXShaderAssemblyVector AsAXShaderAssemblyVector(cons
 	size_t index = static_cast<size_t>(atoi(indexString.c_str()));
 
 	std::string registerString = operand.substr(0, operand.find('.') - 1);
-	AXFLOAT4* registerPtr;
+	AXFLOAT4* registerPtr = nullptr;
 
 	if (registerString == "v")
 	{

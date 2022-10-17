@@ -169,10 +169,12 @@
     <ClInclude Include="inc\Axolotl.h" />
     <ClInclude Include="inc\AXContext.h" />
     <ClInclude Include="inc\AXDevice.cuh" />
+    <ClInclude Include="inc\AXPixelShader.h" />
     <ClInclude Include="inc\AXRasterizer.cuh" />
     <ClInclude Include="inc\AXRenderTargetView.cuh" />
     <ClInclude Include="inc\AXShader.h" />
     <ClInclude Include="inc\AXShaderAssembly.h" />
+    <ClInclude Include="inc\AXShaderCompiler.h" />
     <ClInclude Include="inc\AXShaderMath.h" />
     <ClInclude Include="inc\AXShaderStream.h" />
     <ClInclude Include="inc\AXUtil.h" />
@@ -186,6 +188,7 @@
     <ClInclude Include="inc\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AXPixelShader.cpp" />
     <ClCompile Include="src\AXShaderAssembly.cpp" />
     <ClCompile Include="src\AXShaderMath.cpp" />
     <ClCompile Include="src\Singleton.cpp" />

@@ -90,9 +90,6 @@
     <ClInclude Include="inc\AXFormat.h">
       <Filter>헤더 파일\public</Filter>
     </ClInclude>
-    <ClInclude Include="inc\AXShader.h">
-      <Filter>소스 파일\private</Filter>
-    </ClInclude>
     <ClInclude Include="inc\AXShaderStream.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -104,6 +101,15 @@
     </ClInclude>
     <ClInclude Include="inc\AXShaderAssembly.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXShader.h">
+      <Filter>소스 파일\public</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXPixelShader.h">
+      <Filter>소스 파일\public</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\AXShaderCompiler.h">
+      <Filter>소스 파일\public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -125,14 +131,11 @@
     <ClCompile Include="src\AXShaderAssembly.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\AXPixelShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="src\AXDevice.cu">
-      <Filter>소스 파일\public</Filter>
-    </CudaCompile>
-    <CudaCompile Include="src\AXDeviceTexture2D.cu">
-      <Filter>소스 파일\public</Filter>
-    </CudaCompile>
     <CudaCompile Include="src\AXDeviceMemoryPool.cu">
       <Filter>소스 파일\private</Filter>
     </CudaCompile>
@@ -142,26 +145,32 @@
     <CudaCompile Include="src\AXCommandList.cpp">
       <Filter>소스 파일\public</Filter>
     </CudaCompile>
-    <CudaCompile Include="src\AXContext.cu">
-      <Filter>소스 파일\public</Filter>
-    </CudaCompile>
     <CudaCompile Include="src\AXTexture.cpp">
-      <Filter>소스 파일\public</Filter>
-    </CudaCompile>
-    <CudaCompile Include="src\AXRenderTargetView.cu">
-      <Filter>소스 파일\public</Filter>
-    </CudaCompile>
-    <CudaCompile Include="src\AXChain.cu">
-      <Filter>소스 파일\public</Filter>
-    </CudaCompile>
-    <CudaCompile Include="src\AXBuffer.cu">
       <Filter>소스 파일\public</Filter>
     </CudaCompile>
     <CudaCompile Include="src\AXRasterizer.cu">
       <Filter>소스 파일\private</Filter>
     </CudaCompile>
+    <CudaCompile Include="src\AXContext.cu">
+      <Filter>소스 파일\private</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXDevice.cu">
+      <Filter>소스 파일\private</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXChain.cu">
+      <Filter>소스 파일\private</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXBuffer.cu">
+      <Filter>소스 파일\private</Filter>
+    </CudaCompile>
     <CudaCompile Include="src\AXInputLayout.cu">
-      <Filter>소스 파일\public</Filter>
+      <Filter>소스 파일\private</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXRenderTargetView.cu">
+      <Filter>소스 파일\private</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\AXDeviceTexture2D.cu">
+      <Filter>소스 파일\private</Filter>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>

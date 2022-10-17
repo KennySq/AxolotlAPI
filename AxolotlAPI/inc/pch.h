@@ -18,6 +18,7 @@
 #include<assert.h>
 #include<fstream>
 #include<sstream>
+#include<typeinfo>
 
 #include<cuda.h>
 #include<device_functions.h>

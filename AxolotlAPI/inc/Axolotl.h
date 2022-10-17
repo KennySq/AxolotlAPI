@@ -10,3 +10,5 @@
 #include"AXView.h"
 #include"AXBuffer.cuh"
 #include"AXFormat.h"
+#include"AXPixelShader.h"
+#include"AXShaderCompiler.h"
